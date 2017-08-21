@@ -1,4 +1,4 @@
-package code.smell.detection;
+package code.smell.detection.controller;
 
 import java.util.Map;
 import org.slf4j.Logger;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class WelcomeController {
+public class HomeController {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -27,7 +27,7 @@ public class WelcomeController {
 	    log.info("another info log with {}, {} and {} arguments", 1, "2", 3.0);
 		
 		model.put("message", this.message);
-		return "welcome";
+		return "landingPage";
 	}
 
 }
