@@ -43,7 +43,9 @@ public class UploadController {
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	redirectAttributes.addFlashAttribute("message",
+                    "File upload unsuccessful for file: '" + file.getOriginalFilename() + "'" + e.getMessage());
+
         }
 
         return "redirect:/uploadStatus";

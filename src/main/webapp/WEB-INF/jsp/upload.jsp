@@ -38,8 +38,8 @@
 				<h1>Spring Boot file upload example</h1>
 
 				<form method="POST" action="/upload" enctype="multipart/form-data">
-				    <input type="file" name="file" accept="application/zip" /><br/><br/>
-				    <input type="submit" value="Submit" />
+				    <input class="btn" type="file" name="file" accept="application/zip" /><br/><br/>
+				    <input class="btn btn-primary" type="submit" value="Submit" />
 				</form>
 			</div>
 		</div>
