@@ -34,7 +34,7 @@
 	<div class="container">
 
 		<div class="starter-template">
-			<h1>Spring Boot app for Code Smell Detection</h1>
+			<h1>Welcome</h1>
 			<h2>${message}</h2>
 		</div>
 
