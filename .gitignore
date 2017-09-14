@@ -6,6 +6,9 @@ pom.xml.versionsBackup
 pom.xml.next
 release.properties
 
+MANIFEST.MF
+pom.properties
+
 *.sw?
 .#*
 *#
@@ -30,7 +33,6 @@ _site/
 
 .*.md.html
 manifest.yml
-MANIFEST.MF
 settings.xml
 activemq-data
 overridedb.*
