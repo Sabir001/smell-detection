@@ -16,8 +16,8 @@ public class FileHandler {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	public List<File> getJavaFiles(MultipartFile file){
-		List<File> javaFiles = new ArrayList<File>();
+	public List<String> getJavaFiles(MultipartFile file){
+		List<String> javaFiles = new ArrayList<String>();
 		
 		ZipEntry zipEntry;
 
@@ -28,8 +28,8 @@ public class FileHandler {
 				zip = new ZipInputStream( file.getInputStream());
 				while((zipEntry = zip.getNextEntry()) != null){
 					if(zipEntry.getName().endsWith(".java")){
-						log.debug(zipEntry.getName());
-						javaFiles.add(new File(zipEntry.getName()));
+						log.info(zipEntry.toString());
+						javaFiles.add(zipEntry.getName() + zipEntry.toString());
 					}
 				}
 			} catch (IOException e1) {

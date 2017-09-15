@@ -1,8 +1,9 @@
 package code.smell.detection.controller;
 
-import java.io.File;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +16,12 @@ import code.smell.detection.textualAnalysis.FileHandler;
 @Controller
 public class UploadController {
 
-	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	
     @GetMapping("/uploadProject")
     public String index() {
+    	log.info("Upload Project requested");
         return "upload";
     }
 
@@ -28,30 +30,30 @@ public class UploadController {
                                    RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
+        	log.debug("file was empty");
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return "redirect:/uploadStatus";
         }
 
         if(!file.getOriginalFilename().endsWith(".zip")){
+        	log.warn("File extension was not zip");
         	redirectAttributes.addFlashAttribute("message", "Please upload '.zip' file");
             return "redirect:/uploadStatus";
         }
 
         FileHandler fileHandler = new FileHandler();
-        List<File> javaFileList = fileHandler.getJavaFiles(file);
-        
-        String names = null;
-        for(File f : javaFileList){
-        	names += f.getName() + "\n";
-        }
+        List<String> javaFileList = fileHandler.getJavaFiles(file);
         
         
-        redirectAttributes.addFlashAttribute("message", "Code Smell Result:" + names);
+        
+        
+        redirectAttributes.addFlashAttribute("message", "Code Smell Result:" );
         return "redirect:/uploadStatus";
     }
 
     @GetMapping("/uploadStatus")
     public String uploadStatus() {
+    	log.info("Upload Status invoked");
         return "uploadStatus";
     }
 

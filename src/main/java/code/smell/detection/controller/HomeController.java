@@ -18,14 +18,7 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String welcome(Map<String, Object> model) {
-		 // Log a simple message
-	    log.debug("debug level log");
-	    log.info("info level log");
-	    log.error("error level log");
-	    
-	    // Log a formatted string with parameters
-	    log.info("another info log with {}, {} and {} arguments", 1, "2", 3.0);
-		
+		log.info("Home page requested");
 		model.put("message", this.message);
 		return "landingPage";
 	}
