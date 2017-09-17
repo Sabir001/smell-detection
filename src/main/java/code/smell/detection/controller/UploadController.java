@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,8 @@ public class UploadController {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	@Autowired
+	private FileHandler fileHandler;
 	
     @GetMapping("/uploadProject")
     public String index() {
@@ -41,7 +44,7 @@ public class UploadController {
             return "redirect:/uploadStatus";
         }
 
-        FileHandler fileHandler = new FileHandler();
+        fileHandler = new FileHandler();
         List<String> javaFileList = fileHandler.getJavaFiles(file);
         
         

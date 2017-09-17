@@ -12,9 +12,12 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-
+@Component
+@Scope("singleton")
 public class FileHandler {
 	
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -37,8 +40,10 @@ public class FileHandler {
 				zip = new ZipInputStream( file.getInputStream());
 				while((zipEntry = zip.getNextEntry()) != null){
 					if(zipEntry.getName().endsWith(".java")){
-						log.info(zipEntry.toString());
-						javaFiles.add(zipEntry.toString() + IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8));
+						String tempFileName = zipEntry.toString();
+						String tempFileContent = IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8);
+						log.info(tempFileName);
+						javaFiles.add(tempFileName + "\n" +  tempFileContent);
 						
 					}
 				}
