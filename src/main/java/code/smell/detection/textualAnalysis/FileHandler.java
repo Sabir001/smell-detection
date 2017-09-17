@@ -25,9 +25,9 @@ public class FileHandler {
 		
 		ZipEntry zipEntry;
 
-		log.info("getJavaFiles");
+		log.info("getJavaFiles method invoked");
 		try {
-			File tempFile = File.createTempFile("upload", null);
+			File tempFile = File.createTempFile(file.getOriginalFilename(), null);
 			file.transferTo(tempFile);
 			ZipFile zipFile = new ZipFile(tempFile);
 			// Proces Zip
@@ -37,20 +37,20 @@ public class FileHandler {
 				zip = new ZipInputStream( file.getInputStream());
 				while((zipEntry = zip.getNextEntry()) != null){
 					if(zipEntry.getName().endsWith(".java")){
-						log.info(IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8));
-						javaFiles.add(zipEntry.getName() + IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8));
+						log.info(zipEntry.toString());
+						javaFiles.add(zipEntry.toString() + IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8));
 						
 					}
 				}
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				log.error(e1.getMessage());
 			}
 			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		return javaFiles;
 	}

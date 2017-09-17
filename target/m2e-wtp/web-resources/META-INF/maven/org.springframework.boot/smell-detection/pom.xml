@@ -33,7 +33,7 @@
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.5</version>
-		</dependency>
+		</dependency> 
 				
 		
 		<!-- Web with Tomcat + Embed -->

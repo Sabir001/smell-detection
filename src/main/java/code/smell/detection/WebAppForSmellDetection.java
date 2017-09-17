@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class WebAppForSmellDetection extends SpringBootServletInitializer {
 
-	private int maxUploadSizeInMb = 10 * 1024 * 1024;
 	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
