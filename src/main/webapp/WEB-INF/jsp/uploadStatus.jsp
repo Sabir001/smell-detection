@@ -35,7 +35,7 @@
 
 		<div class="row">
 			<div class="col-lg-6 col-lg-offset-3">
-				<h1>Spring Boot - Upload Status</h1>
+				<h1>Upload Status</h1>
 
 				<div th:if="${message}">
 				    <h2>${message}</h2>

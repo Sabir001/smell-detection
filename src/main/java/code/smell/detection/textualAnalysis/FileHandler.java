@@ -25,15 +25,13 @@ public class FileHandler {
 	public List<String> getJavaFiles(MultipartFile file){
 		List<String> javaFiles = new ArrayList<String>();
 		
-		
-		ZipEntry zipEntry;
-
 		log.info("getJavaFiles method invoked");
 		try {
+			ZipEntry zipEntry;
 			File tempFile = File.createTempFile(file.getOriginalFilename(), null);
 			file.transferTo(tempFile);
 			ZipFile zipFile = new ZipFile(tempFile);
-			// Proces Zip
+			
 			tempFile.delete();
 			ZipInputStream zip;
 			try {
@@ -48,13 +46,10 @@ public class FileHandler {
 					}
 				}
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				log.error(e1.getMessage());
 			}
 			
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			log.error(e.getMessage());
 		}
 		return javaFiles;

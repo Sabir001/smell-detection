@@ -35,7 +35,7 @@
 
 		<div class="row">
 			<div class="col-lg-6 col-lg-offset-3">
-				<h1>Spring Boot file upload example</h1>
+				<h1>Upload '.zip' file for detecting code smells</h1>
 
 				<form method="POST" action="/upload" enctype="multipart/form-data">
 				    <input class="btn" type="file" name="file" accept="application/zip" /><br/><br/>

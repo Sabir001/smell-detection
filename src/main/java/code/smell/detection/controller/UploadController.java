@@ -28,7 +28,7 @@ public class UploadController {
         return "upload";
     }
 
-    @PostMapping("/upload") // //new annotation since 4.3
+    @PostMapping("/upload") 
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
@@ -44,13 +44,10 @@ public class UploadController {
             return "redirect:/uploadStatus";
         }
 
-        fileHandler = new FileHandler();
         List<String> javaFileList = fileHandler.getJavaFiles(file);
         
         
-        
-        
-        redirectAttributes.addFlashAttribute("message", "Code Smell Result:" );
+        redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
         return "redirect:/uploadStatus";
     }
 
