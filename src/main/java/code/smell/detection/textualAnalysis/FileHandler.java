@@ -30,12 +30,16 @@ public class FileHandler {
 			ZipEntry zipEntry;
 			File tempFile = File.createTempFile(file.getOriginalFilename(), null);
 			file.transferTo(tempFile);
-			ZipFile zipFile = new ZipFile(tempFile);
 			
-			tempFile.delete();
-			ZipInputStream zip;
-			try {
-				zip = new ZipInputStream( file.getInputStream());
+			
+			try (
+				ZipFile zipFile = new ZipFile(tempFile);
+				ZipInputStream zip = new ZipInputStream( file.getInputStream());
+				){
+
+				tempFile.delete();
+				
+				
 				while((zipEntry = zip.getNextEntry()) != null){
 					if(zipEntry.getName().endsWith(".java")){
 						String tempFileName = zipEntry.toString();
@@ -45,7 +49,6 @@ public class FileHandler {
 						
 					}
 				}
-				zipFile.close();
 			} catch (IOException e1) {
 				log.error(e1.getMessage());
 			}
