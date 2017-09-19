@@ -45,6 +45,7 @@ public class FileHandler {
 						
 					}
 				}
+				zipFile.close();
 			} catch (IOException e1) {
 				log.error(e1.getMessage());
 			}
