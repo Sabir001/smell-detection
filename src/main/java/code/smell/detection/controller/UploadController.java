@@ -1,5 +1,6 @@
 package code.smell.detection.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import code.smell.detection.textualAnalysis.FileHandler;
+import code.smell.detection.textualAnalysis.MethodExtractor;
 
 @Controller
 public class UploadController {
@@ -21,6 +23,9 @@ public class UploadController {
 	
 	@Autowired
 	private FileHandler fileHandler;
+	
+	@Autowired
+	private MethodExtractor methodExtractor;
 	
     @GetMapping("/uploadProject")
     public String index() {
@@ -45,6 +50,8 @@ public class UploadController {
         }
 
         List<String> javaFileList = fileHandler.getJavaFiles(file);
+        
+        List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
         
         
         redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
