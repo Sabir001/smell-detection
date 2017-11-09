@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import code.smell.detection.textualAnalysis.FileHandler;
+import code.smell.detection.textualAnalysis.InformationRetrievalTemplate;
 import code.smell.detection.textualAnalysis.MethodExtractor;
 
 @Controller
@@ -26,6 +27,9 @@ public class UploadController {
 	
 	@Autowired
 	private MethodExtractor methodExtractor;
+	
+	@Autowired
+	private InformationRetrievalTemplate informationRetrievalTemplate;
 	
     @GetMapping("/uploadProject")
     public String index() {
@@ -53,6 +57,10 @@ public class UploadController {
         
         List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
         
+        informationRetrievalTemplate.setLists(javaFileList, allMethods);
+        
+        javaFileList = informationRetrievalTemplate.javaFiles;
+        allMethods = informationRetrievalTemplate.methods;
         
         redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
         return "redirect:/uploadStatus";
