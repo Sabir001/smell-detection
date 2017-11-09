@@ -3,12 +3,15 @@ package code.smell.detection.textualAnalysis;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class InformationRetrievalTemplate {
-	public List<String> javaFiles;
-	public List<ArrayList<String>> methods;
+	public List<String> javaFiles = new ArrayList<>();
+	public List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
 	
-	public InformationRetrievalTemplate(){
-		initializeVariables();
+	public void setLists(List<String> javaFiles, List<ArrayList<String>> methods){
+		setVariables(javaFiles, methods);
 		
 		camelCaseSplit();
 		makeLowerCase();
@@ -37,9 +40,9 @@ public class InformationRetrievalTemplate {
 		
 	}
 
-	private void initializeVariables() {
-		this.javaFiles = new ArrayList<>();
-		this.methods = new ArrayList<ArrayList<String>>();
+	private void setVariables(List<String> javaFiles, List<ArrayList<String>> methods) {
+		this.javaFiles = javaFiles;
+		this.methods = methods;
 	}
 
 }
