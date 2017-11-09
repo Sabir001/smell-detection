@@ -21,16 +21,20 @@ public class MethodExtractor {
 		
 		log.info("getMethods invoked");
 		
-		final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
-		for(String string : allJavaCLasses) {
-			Matcher matcher = pattern.matcher(string);
-			ArrayList<String> methodInIndividualClass = new ArrayList<>();
-			while(matcher.find()) {
-				methodInIndividualClass.add(matcher.group());
+		try{
+			final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+			for(String string : allJavaCLasses) {
+				Matcher matcher = pattern.matcher(string);
+				ArrayList<String> methodInIndividualClass = new ArrayList<>();
+				while(matcher.find()) {
+					methodInIndividualClass.add(matcher.group());
+				}
+				methods.add(methodInIndividualClass);
 			}
-			methods.add(methodInIndividualClass);
+			
+		} catch(Exception e){
+			e.printStackTrace();
 		}
-		
 		
 		return methods;
 	}

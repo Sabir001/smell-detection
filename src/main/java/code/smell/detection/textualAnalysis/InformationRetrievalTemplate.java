@@ -34,13 +34,17 @@ public class InformationRetrievalTemplate {
 	
 	
 	public void setLists(List<String> javaFiles, List<ArrayList<String>> methods){
-		setVariables(javaFiles, methods);
-		
-		camelCaseSplit();
-		makeLowerCase();
-		specialCharacterRemoval();
-		stemmer();
-		tfIdf();
+		try{
+			setVariables(javaFiles, methods);
+			
+			camelCaseSplit();
+			makeLowerCase();
+			specialCharacterRemoval();
+			stemmer();
+			tfIdf();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private void tfIdf() {

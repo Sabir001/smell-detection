@@ -41,28 +41,34 @@ public class UploadController {
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
-        if (file.isEmpty()) {
-        	log.debug("file was empty");
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:/uploadStatus";
-        }
+        try{
+        	if (file.isEmpty()) {
+            	log.debug("file was empty");
+                redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+                return "redirect:/uploadStatus";
+            }
 
-        if(!file.getOriginalFilename().endsWith(".zip")){
-        	log.warn("File extension was not zip");
-        	redirectAttributes.addFlashAttribute("message", "Please upload '.zip' file");
-            return "redirect:/uploadStatus";
-        }
+            if(!file.getOriginalFilename().endsWith(".zip")){
+            	log.warn("File extension was not zip");
+            	redirectAttributes.addFlashAttribute("message", "Please upload '.zip' file");
+                return "redirect:/uploadStatus";
+            }
 
-        List<String> javaFileList = fileHandler.getJavaFiles(file);
+            List<String> javaFileList = fileHandler.getJavaFiles(file);
+            
+            List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
+            
+            informationRetrievalTemplate.setLists(javaFileList, allMethods);
+            
+            javaFileList = informationRetrievalTemplate.javaFiles;
+            allMethods = informationRetrievalTemplate.methods;
+            
+            redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
+            
+        } catch(Exception e){
+        	e.printStackTrace();
+        }
         
-        List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
-        
-        informationRetrievalTemplate.setLists(javaFileList, allMethods);
-        
-        javaFileList = informationRetrievalTemplate.javaFiles;
-        allMethods = informationRetrievalTemplate.methods;
-        
-        redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
         return "redirect:/uploadStatus";
     }
 
