@@ -33,7 +33,7 @@ public class MethodExtractor {
 			}
 			
 		} catch(Exception e){
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
 		return methods;

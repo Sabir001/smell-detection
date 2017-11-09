@@ -66,7 +66,7 @@ public class UploadController {
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             
         } catch(Exception e){
-        	e.printStackTrace();
+        	log.error(e.getMessage());
         }
         
         return "redirect:/uploadStatus";

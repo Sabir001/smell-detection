@@ -3,6 +3,8 @@ package code.smell.detection.textualAnalysis;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import code.smell.detection.textualAnalysis.IR.TfIdf;
 
 @Component
 public class InformationRetrievalTemplate {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	public List<String> javaFiles = new ArrayList<>();
 	public List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
 	
@@ -43,7 +47,7 @@ public class InformationRetrievalTemplate {
 			stemmer();
 			tfIdf();
 		} catch(Exception e){
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 
