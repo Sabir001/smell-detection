@@ -8,10 +8,45 @@ import org.springframework.stereotype.Component;
 @Component
 public class CamelCaseSpliter {
 	public List<String> splitAllJavaFiles(List<String> javaFiles){
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
+		List<String> wholeFiles = new ArrayList<>();
+		
+		for(String wholeClassString : javaFiles) {
+			String classFiles = "";
+			String[] splited = wholeClassString.trim().split("\\s+");
+			for(String singleWordInClass : splited) {
+				classFiles += splitWord(singleWordInClass);
+			}
+			wholeFiles.add(classFiles);
+		}
+		
+		return wholeFiles;
 	}
 	
 	public List<ArrayList<String>> splitAllMethods(List<ArrayList<String>> methods){
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
+		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
+		
+		for(ArrayList<String> method : methods) {
+			ArrayList<String> temporaryMethodList = new ArrayList<>();
+			for(String wholeClassString : method) {
+				
+				String classFiles = "";
+				String[] splited = wholeClassString.trim().split("\\s+");
+				for(String singleWordInClass : splited) {
+					classFiles += splitWord(singleWordInClass);
+				}
+				temporaryMethodList.add(classFiles);
+			}
+			allMethodsOfFiles.add(temporaryMethodList);
+		}
+		
+		return allMethodsOfFiles;
+	}
+	
+	private String splitWord(String word) {
+		String words = "";
+		for (String w : word.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
+	        words += w;
+	    }
+		return words;
 	}
 }
