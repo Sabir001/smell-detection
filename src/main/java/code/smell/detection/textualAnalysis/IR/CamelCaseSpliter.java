@@ -25,10 +25,9 @@ public class CamelCaseSpliter {
 	public List<ArrayList<String>> splitAllMethods(List<ArrayList<String>> methods){
 		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
 		
-		for(ArrayList<String> method : methods) {
+		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> temporaryMethodList = new ArrayList<>();
-			for(String wholeClassString : method) {
-				
+			for(String wholeClassString : singleClass) {
 				String classFiles = "";
 				String[] splited = wholeClassString.trim().split("\\s+");
 				for(String singleWordInClass : splited) {

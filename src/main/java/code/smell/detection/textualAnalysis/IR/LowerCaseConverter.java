@@ -23,8 +23,8 @@ public class LowerCaseConverter {
 	public List<ArrayList<String>> makeLowerCaseAllMethods(List<ArrayList<String>> methods){
 		List<ArrayList<String>> lowerCaseMethods = new ArrayList<ArrayList<String>>();
 		
-		for(ArrayList<String> method : methods) {
-			lowerCaseMethods.add((ArrayList<String>) makeListLowerCased(method));
+		for(ArrayList<String> singleClass : methods) {
+			lowerCaseMethods.add((ArrayList<String>) makeListLowerCased(singleClass));
 		}
 		
 		return lowerCaseMethods;
