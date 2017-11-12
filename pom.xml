@@ -48,6 +48,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/gov.nist.math/jama -->
+		<dependency>
+		    <groupId>gov.nist.math</groupId>
+		    <artifactId>jama</artifactId>
+		    <version>1.0.3</version>
+		</dependency>
+				
 
 		<!-- Need this to compile JSP -->
 		<dependency>
