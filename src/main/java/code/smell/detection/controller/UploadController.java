@@ -60,8 +60,8 @@ public class UploadController {
             
             informationRetrievalTemplate.setLists(javaFileList, allMethods);
             
-            javaFileList = informationRetrievalTemplate.javaFiles;
-            allMethods = informationRetrievalTemplate.methods;
+            //javaFileList = informationRetrievalTemplate.javaFiles;
+            List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
             
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             

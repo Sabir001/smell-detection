@@ -7,12 +7,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TfIdf {
-	public List<String> tfIdfCheckInAllJavaFiles(List<String> javaFiles){
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
-	}
+	
 	
 	public List<ArrayList<String>> tfIdfCheckInAllMethods(List<ArrayList<String>> methods){
-		throw new java.lang.UnsupportedOperationException("Not supported yet.");
+		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
+		
+		for(ArrayList<String> singleClass : methods) {
+			ArrayList<String> temporaryMethodList = new ArrayList<>();
+			for(String singleMethod : singleClass) {
+				String classFiles = "";
+				String[] splited = singleMethod.trim().split("\\s+");
+				for(String singleWordInMethod : splited) {
+					if(tfIdf(singleClass, methods, singleWordInMethod) > .2)
+						classFiles += singleWordInMethod;
+				}
+				temporaryMethodList.add(classFiles);
+			}
+			allMethodsOfFiles.add(temporaryMethodList);
+		}
+		
+		return allMethodsOfFiles;
 	}
 	
 	/**
@@ -30,13 +44,13 @@ public class TfIdf {
     }
 
     /**
-     * @param docs list of list of strings represents the dataset
+     * @param methods list of list of strings represents the dataset
      * @param term String represents a term
      * @return the inverse term frequency of term in documents
      */
-    public double idf(List<List<String>> docs, String term) {
+    public double idf(List<ArrayList<String>> methods, String term) {
         double n = 0;
-        for (List<String> doc : docs) {
+        for (List<String> doc : methods) {
             for (String word : doc) {
                 if (term.equalsIgnoreCase(word)) {
                     n++;
@@ -44,17 +58,17 @@ public class TfIdf {
                 }
             }
         }
-        return Math.log(docs.size() / n);
+        return Math.log(methods.size() / n);
     }
 
     /**
      * @param doc  a text document
-     * @param docs all documents
+     * @param methods all documents
      * @param term term
      * @return the TF-IDF of term
      */
-    public double tfIdf(List<String> doc, List<List<String>> docs, String term) {
-        return tf(doc, term) * idf(docs, term);
+    public double tfIdf(List<String> doc, List<ArrayList<String>> methods, String term) {
+        return tf(doc, term) * idf(methods, term);
 
     }
 
