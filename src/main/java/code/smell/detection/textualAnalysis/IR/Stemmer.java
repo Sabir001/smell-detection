@@ -17,7 +17,7 @@ public class Stemmer {
 			for(String singleWordInClass : splited) {
 				PottersStemmer pottersStemmer = new PottersStemmer();
 				pottersStemmer.add(singleWordInClass.toCharArray(), singleWordInClass.length());
-				
+				pottersStemmer.stem();
 				
 				classFiles += pottersStemmer.toString();
 			}
@@ -38,7 +38,7 @@ public class Stemmer {
 				for(String singleWordInClass : splited) {
 					PottersStemmer pottersStemmer = new PottersStemmer();
 					pottersStemmer.add(singleWordInClass.toCharArray(), singleWordInClass.length());
-					
+					pottersStemmer.stem();
 					
 					classFiles += pottersStemmer.toString();
 				}
