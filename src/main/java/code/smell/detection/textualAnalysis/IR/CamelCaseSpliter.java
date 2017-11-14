@@ -31,12 +31,13 @@ public class CamelCaseSpliter {
 				String classFiles = "";
 				String[] splited = wholeClassString.trim().split("\\s+");
 				for(String singleWordInClass : splited) {
-					classFiles += splitWord(singleWordInClass);
+					classFiles += splitWord(singleWordInClass.trim());
 				}
 				temporaryMethodList.add(classFiles);
 			}
 			allMethodsOfFiles.add(temporaryMethodList);
 		}
+		
 		
 		return allMethodsOfFiles;
 	}
@@ -44,7 +45,7 @@ public class CamelCaseSpliter {
 	private String splitWord(String word) {
 		String words = "";
 		for (String w : word.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])")) {
-	        words += w;
+	        words += (" " + w);
 	    }
 		return words;
 	}

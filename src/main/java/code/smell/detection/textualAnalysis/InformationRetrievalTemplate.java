@@ -46,7 +46,7 @@ public class InformationRetrievalTemplate {
 			makeLowerCase();
 			specialCharacterRemoval();
 			stemmer();
-			tfIdf();
+			//tfIdf();
 		} catch(Exception e){
 			log.error(e.getMessage());
 		}

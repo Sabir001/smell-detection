@@ -63,6 +63,12 @@ public class UploadController {
             //javaFileList = informationRetrievalTemplate.javaFiles;
             List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
             
+            for(ArrayList<String> method : changedAllMethods) {
+            	for(String word : method) {
+            		log.info(word);
+            	}
+            }
+            
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             
         } catch(Exception e){

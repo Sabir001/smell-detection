@@ -19,9 +19,9 @@ public class Stemmer {
 				pottersStemmer.add(singleWordInClass.toCharArray(), singleWordInClass.length());
 				pottersStemmer.stem();
 				
-				classFiles += pottersStemmer.toString();
+				classFiles += (" " + pottersStemmer.toString());
 			}
-			wholeFiles.add(classFiles);
+			wholeFiles.add(classFiles.trim());
 		}
 		
 		return wholeFiles;
@@ -40,9 +40,9 @@ public class Stemmer {
 					pottersStemmer.add(singleWordInClass.toCharArray(), singleWordInClass.length());
 					pottersStemmer.stem();
 					
-					classFiles += pottersStemmer.toString();
+					classFiles += (" " + pottersStemmer.toString());
 				}
-				temporaryMethodList.add(classFiles);
+				temporaryMethodList.add(classFiles.trim());
 			}
 			allMethodsOfFiles.add(temporaryMethodList);
 		}

@@ -18,7 +18,7 @@ public class TfIdf {
 				String classFiles = "";
 				String[] splited = singleMethod.trim().split("\\s+");
 				for(String singleWordInMethod : splited) {
-					if(tfIdf(singleClass, methods, singleWordInMethod) > .2)
+					if(tfIdf(singleClass, methods, singleWordInMethod) > .05)
 						classFiles += singleWordInMethod;
 				}
 				temporaryMethodList.add(classFiles);

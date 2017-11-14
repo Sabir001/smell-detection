@@ -11,7 +11,7 @@ public class SpecialCharecterRemover {
 		List<String> removed = new ArrayList<>();
 		
 		for(String singleJavaFile : javaFiles) {
-			removed.add(singleJavaFile.replaceAll("[^A-Za-z]+", "").trim());
+			removed.add(singleJavaFile.replaceAll("[^A-Za-z]+", " ").trim());
 		}
 		
 		return removed;
@@ -23,7 +23,7 @@ public class SpecialCharecterRemover {
 		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> oneCLass = new ArrayList<>();
 			for(String method : singleClass) {
-				oneCLass.add(method.replaceAll("[^A-Za-z]+", "").trim());
+				oneCLass.add(method.replaceAll("[^A-Za-z]+", " ").trim());
 			}
 			removedMethods.add(oneCLass);
 		}
