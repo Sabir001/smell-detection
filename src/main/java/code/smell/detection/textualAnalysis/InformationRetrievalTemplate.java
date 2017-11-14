@@ -12,7 +12,6 @@ import code.smell.detection.textualAnalysis.IR.CamelCaseSpliter;
 import code.smell.detection.textualAnalysis.IR.LowerCaseConverter;
 import code.smell.detection.textualAnalysis.IR.SpecialCharecterRemover;
 import code.smell.detection.textualAnalysis.IR.Stemmer;
-import code.smell.detection.textualAnalysis.IR.TfIdf;
 
 @Component
 public class InformationRetrievalTemplate {
@@ -33,30 +32,20 @@ public class InformationRetrievalTemplate {
 	@Autowired
 	private Stemmer stemmer;
 	
-	@Autowired
-	private TfIdf tfIdf;
-	
 	
 	public void setLists(List<String> javaFiles, List<ArrayList<String>> methods){
 		try{
-			//setJavaFiles(javaFiles);
 			setMethods(methods);
 			
 			camelCaseSplit();
 			makeLowerCase();
 			specialCharacterRemoval();
 			stemmer();
-			//tfIdf();
 		} catch(Exception e){
 			log.error(e.getMessage());
 		}
 	}
 
-	private void tfIdf() {
-		List<ArrayList<String>> changedMethods = tfIdf.tfIdfCheckInAllMethods(methods);
-		
-		setMethods(changedMethods);
-	}
 
 	private void stemmer() {
 		List<ArrayList<String>> changedMethods = stemmer.stemAllMethods(methods);

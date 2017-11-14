@@ -60,7 +60,6 @@ public class UploadController {
             
             informationRetrievalTemplate.setLists(javaFileList, allMethods);
             
-            //javaFileList = informationRetrievalTemplate.javaFiles;
             List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
             
             for(ArrayList<String> method : changedAllMethods) {
