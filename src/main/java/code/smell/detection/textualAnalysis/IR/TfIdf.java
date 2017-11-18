@@ -18,10 +18,10 @@ public class TfIdf {
 				String classFiles = "";
 				String[] splited = singleMethod.trim().split("\\s+");
 				for(String singleWordInMethod : splited) {
-					if(tfIdf(singleClass, methods, singleWordInMethod) > .05)
-						classFiles += singleWordInMethod;
+					if(Math.abs(tfIdf(singleClass, methods, singleWordInMethod)) != 0.0)
+						classFiles += (" " + singleWordInMethod);
 				}
-				temporaryMethodList.add(classFiles);
+				temporaryMethodList.add(classFiles.trim());
 			}
 			allMethodsOfFiles.add(temporaryMethodList);
 		}
