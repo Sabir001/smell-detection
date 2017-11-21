@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import code.smell.detection.textualAnalysis.FileHandler;
 import code.smell.detection.textualAnalysis.InformationRetrievalTemplate;
 import code.smell.detection.textualAnalysis.MethodExtractor;
+import code.smell.detection.textualAnalysis.SmellDetector;
 
 @Controller
 public class UploadController {
@@ -30,6 +31,9 @@ public class UploadController {
 	
 	@Autowired
 	private InformationRetrievalTemplate informationRetrievalTemplate;
+	
+	@Autowired
+	private SmellDetector smellDetector;
 	
     @GetMapping("/uploadProject")
     public String index() {
@@ -67,6 +71,10 @@ public class UploadController {
             		log.info(word);
             	}
             }
+            
+            smellDetector.createSourceDirectory();
+            smellDetector.createStopWordDirectory();
+            smellDetector.manageStopWords();
             
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             
