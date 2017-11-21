@@ -1,7 +1,10 @@
 package code.smell.detection.textualAnalysis.FileCreation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
@@ -36,12 +39,30 @@ public class StopWordFileCreation {
 			+ "yourself yourselves";
 	
 	public void createFilesInStopWordDirectory(){
-		
+		try(
+				PrintWriter javaWriter = new PrintWriter("Stop Word Java.txt", "UTF-8");
+				PrintWriter englishWriter = new PrintWriter("Stop Word English.txt", "UTF-8");	
+				) {
+			javaWriter.println(javaStopWords);
+			englishWriter.println(englishStopWords);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteFilesInStopWordDirectory(){
 		try {
 			FileUtils.cleanDirectory(new File("Stop Word Directory"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteFilesInSourceDirectory(){
+		try {
+			FileUtils.cleanDirectory(new File("Source Folder"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
