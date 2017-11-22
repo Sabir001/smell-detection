@@ -40,11 +40,10 @@ public class StopWordFileCreation {
 	
 	public void createFilesInStopWordDirectory(){
 		try(
-				PrintWriter javaWriter = new PrintWriter("Stop Word Java.txt", "UTF-8");
-				PrintWriter englishWriter = new PrintWriter("Stop Word English.txt", "UTF-8");	
+				PrintWriter writer = new PrintWriter("Stop Word Java.txt", "UTF-8");
 				) {
-			javaWriter.println(javaStopWords);
-			englishWriter.println(englishStopWords);
+			writer.println(javaStopWords);
+			writer.println(englishStopWords);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
