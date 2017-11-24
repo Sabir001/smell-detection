@@ -40,7 +40,7 @@ public class StopWordFileCreation {
 	
 	public void createFilesInStopWordDirectory(){
 		try(
-				PrintWriter writer = new PrintWriter("Stop Word Java.txt", "UTF-8");
+				PrintWriter writer = new PrintWriter("Stop Words.txt", "UTF-8");
 				) {
 			writer.println(javaStopWords);
 			writer.println(englishStopWords);

@@ -25,6 +25,10 @@ public class SmellDetector {
 		this.methods = methods;
 	}
 	
+	public void detectCodeSmell() {
+		
+	}
+	
 	
 	public void createSourceDirectory(){
 		try {
