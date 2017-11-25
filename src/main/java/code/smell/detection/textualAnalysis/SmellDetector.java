@@ -50,8 +50,16 @@ public class SmellDetector {
 		this.methods = methods;
 	}
 	
-	public void detectCodeSmell() {
+	public List<ArrayList<String>> detectCodeSmell() {
+		List<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
 		
+		results.add((ArrayList<String>) detectBlob.detectSmell(javaFiles, methods));
+		results.add((ArrayList<String>) detectFeatureEnvy.detectSmell(javaFiles, methods));
+		results.add((ArrayList<String>) detectLongMethod.detectSmell(javaFiles, methods));
+		results.add((ArrayList<String>) detectMisplacedClass.detectSmell(javaFiles, methods));
+		results.add((ArrayList<String>) detectPromiscousPackage.detectSmell(javaFiles, methods));
+		
+		return results;
 	}
 	
 	

@@ -65,6 +65,7 @@ public class UploadController {
             informationRetrievalTemplate.setLists(javaFileList, allMethods);
             
             List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
+            List<String> changedJavaFiles = informationRetrievalTemplate.javaFiles;
             
             for(ArrayList<String> method : changedAllMethods) {
             	for(String word : method) {
@@ -72,9 +73,14 @@ public class UploadController {
             	}
             }
             
+            smellDetector.initialization(changedJavaFiles, changedAllMethods);
             smellDetector.createSourceDirectory();
             smellDetector.createStopWordDirectory();
             smellDetector.manageStopWords();
+            
+            List<ArrayList<String>> results = smellDetector.detectCodeSmell();
+            
+            redirectAttributes.addFlashAttribute("results", results );
             
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             
