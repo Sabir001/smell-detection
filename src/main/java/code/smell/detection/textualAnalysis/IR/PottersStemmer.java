@@ -1,7 +1,11 @@
 package code.smell.detection.textualAnalysis.IR;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PottersStemmer {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	private char[] b;
 	private int i, /* offset into b */
 			i_end, /* offset to end of stemmed word */

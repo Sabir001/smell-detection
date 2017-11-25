@@ -3,13 +3,18 @@ package code.smell.detection.textualAnalysis.IR;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TfIdf {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	
 	public List<ArrayList<String>> tfIdfCheckInAllMethods(List<ArrayList<String>> methods){
+		log.info("tfIdfCheckInAllMethods invoked");
+		
 		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
 		
 		for(ArrayList<String> singleClass : methods) {
@@ -25,6 +30,8 @@ public class TfIdf {
 			}
 			allMethodsOfFiles.add(temporaryMethodList);
 		}
+		
+		log.info("tfIdfCheckInAllMethods done");
 		
 		return allMethodsOfFiles;
 	}

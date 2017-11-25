@@ -10,7 +10,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class InvertedFile {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	String dirPath, stopListPath;
 	ArrayList<String> stopWordList = new ArrayList<String>();
@@ -38,7 +42,7 @@ public class InvertedFile {
 		try {
 			fstream = new FileInputStream(stopListPath);
 		} catch (FileNotFoundException e) {
-			System.out.println("File does not exist. Set correct path");
+			log.error(e.getMessage());
 		}
 
 		DataInputStream in = new DataInputStream(fstream);
@@ -170,7 +174,7 @@ public class InvertedFile {
 		try {
 			fstream = new FileInputStream(filePath);
 		} catch (FileNotFoundException e) {
-			System.out.println("File does not exist. Set correct path");
+			log.error(e.getMessage());
 		}
 
 		DataInputStream in = new DataInputStream(fstream);
@@ -275,7 +279,7 @@ public class InvertedFile {
 		try {
 			fstream = new FileInputStream(dirPath + "/" + documentName);
 		} catch (FileNotFoundException e) {
-			System.out.println("File does not exist. Set correct path");
+			log.error(e.getMessage());
 		}
 		
 		DataInputStream in = new DataInputStream(fstream);

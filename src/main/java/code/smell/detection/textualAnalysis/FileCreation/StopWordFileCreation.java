@@ -7,10 +7,14 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StopWordFileCreation {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	private static final String javaStopWords = "abstract assert boolean break byte"
 			+ "case catch char class const continue default do double else enum"
 			+ "extends final finally float for goto if implements import"
@@ -45,9 +49,9 @@ public class StopWordFileCreation {
 			writer.println(javaStopWords);
 			writer.println(englishStopWords);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 	
@@ -55,7 +59,7 @@ public class StopWordFileCreation {
 		try {
 			FileUtils.cleanDirectory(new File("Stop Word Directory"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 	
@@ -63,7 +67,7 @@ public class StopWordFileCreation {
 		try {
 			FileUtils.cleanDirectory(new File("Source Folder"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 }

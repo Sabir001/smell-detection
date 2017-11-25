@@ -3,11 +3,17 @@ package code.smell.detection.textualAnalysis.IR;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CamelCaseSpliter {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	public List<String> splitAllJavaFiles(List<String> javaFiles){
+		log.info("splitAllJavaFiles invoked");
+		
 		List<String> wholeFiles = new ArrayList<>();
 		
 		for(String wholeClassString : javaFiles) {
@@ -19,10 +25,14 @@ public class CamelCaseSpliter {
 			wholeFiles.add(classFiles);
 		}
 		
+		log.info("splitAllJavaFiles done");
+		
 		return wholeFiles;
 	}
 	
 	public List<ArrayList<String>> splitAllMethods(List<ArrayList<String>> methods){
+		log.info("splitAllMethods invoked");
+		
 		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
 		
 		for(ArrayList<String> singleClass : methods) {
@@ -38,6 +48,7 @@ public class CamelCaseSpliter {
 			allMethodsOfFiles.add(temporaryMethodList);
 		}
 		
+		log.info("splitAllMethods done");
 		
 		return allMethodsOfFiles;
 	}
