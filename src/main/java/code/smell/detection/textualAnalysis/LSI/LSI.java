@@ -49,7 +49,7 @@ public class LSI {
 	/**
 	 * Set matrices as per value of k
 	 */
-	private void prepareMatrices() {
+	public void prepareMatrices() {
 		for (int i = 0; i < leftSingularMatrix.getRowDimension(); i++) 
 			for (int j = k; j < leftSingularMatrix.getColumnDimension(); j++)
 				leftSingularMatrix.set(i, j, 0);
@@ -67,7 +67,7 @@ public class LSI {
 	 * Prepares a object of class SingularValueDecomposition by passing the
 	 * term document matrix TD.
 	 */
-	private void performSingularValueDecomposition() {
+	public void performSingularValueDecomposition() {
 		svd = new SingularValueDecomposition(TD);		
 		leftSingularMatrix = svd.getU();
 		singularValueMatrix = svd.getS();
@@ -87,7 +87,7 @@ public class LSI {
 	 * @param query entered by the user 
 	 * @return Query vector represented in terms of a column matrix
 	 */
-	private Matrix createQueryVector(String query) {
+	public Matrix createQueryVector(String query) {
 		List<String> words = Arrays.asList(query.split(InvertedFile.whiteSpacePattern));
 		TreeMap<String, Integer> wordList = invObj.getWordList();
 		Matrix queryVector = new Matrix(wordList.size(), 1);
@@ -129,7 +129,7 @@ public class LSI {
 	 * @param queryMatrix
 	 * @return Vector modulus for the matrix after multiplying it by the left singular matrix
 	 */
-	private double getModulus(Matrix matrix) {
+	public double getModulus(Matrix matrix) {
 		return (getVectorModulus(leftSingularMatrix.transpose().times(matrix)));
 	}
 	
@@ -138,7 +138,7 @@ public class LSI {
 	 * @param columnNumber
 	 * @return Column related to the document from the right singular matrix 
 	 */
-	private Matrix getDocumentColumnMatrix(int columnNumber) {
+	public Matrix getDocumentColumnMatrix(int columnNumber) {
 		Matrix columnMatrix = new Matrix(rightSingularMatrix.getColumnDimension(), 1);
 		Matrix resultMatrix;
 		for (int i = 0; i<columnMatrix.getRowDimension(); i++) {
@@ -157,7 +157,7 @@ public class LSI {
 	 * @param documentMatrix
 	 * @return Similarity value between the query entered by the user and a particular document
 	 */
-	private double getSimilarity(Matrix queryMatrix, Matrix documentMatrix) {
+	public double getSimilarity(Matrix queryMatrix, Matrix documentMatrix) {
 		Matrix productMatrix;
 		double denominator, similarity;
 		
@@ -173,7 +173,7 @@ public class LSI {
 	 * @param queryVector
 	 * @return Map where key is the document and value is the similarity it has with the query 
 	 */
-	private TreeMap<String, Double> findSimilarities(Matrix queryVector) {
+	public TreeMap<String, Double> findSimilarities(Matrix queryVector) {
 		ArrayList<String> documents = invObj.getDocumentList();
 		similarityValues = new TreeMap<String, Double>();
 		Matrix documentMatrix;
@@ -192,7 +192,7 @@ public class LSI {
 	 * @param similarityValues
 	 * @return Document having maximum similarity value in the map that it receives
 	 */
-	private String findMax(TreeMap<String, Double> similarityValues) {
+	public String findMax(TreeMap<String, Double> similarityValues) {
 		double max = Double.NEGATIVE_INFINITY;
 		String maxDocName = null;
 		for (String document : similarityValues.keySet()) {
@@ -213,7 +213,7 @@ public class LSI {
 	 * 
 	 * Displays the top <relevantDocs> documents which match the user query
 	 */
-	private void displayRelevantDocuments(TreeMap<String, Double> similarityValues, int docCount) throws IOException {
+	public void displayRelevantDocuments(TreeMap<String, Double> similarityValues, int docCount) throws IOException {
 		if (docCount > TD.getColumnDimension()) 
 			docCount = TD.getColumnDimension();
 
