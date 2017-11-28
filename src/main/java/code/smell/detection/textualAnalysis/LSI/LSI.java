@@ -213,22 +213,25 @@ public class LSI {
 	 * 
 	 * Displays the top <relevantDocs> documents which match the user query
 	 */
-	public void displayRelevantDocuments(TreeMap<String, Double> similarityValues, int docCount) throws IOException {
+	public List<Double> displayRelevantDocuments(TreeMap<String, Double> similarityValues, int docCount) throws IOException {
+		List<Double> result = new ArrayList<>();
 		if (docCount > TD.getColumnDimension()) 
 			docCount = TD.getColumnDimension();
 
-		System.out.println();
+		//System.out.println();
 		for (int i = 0; i < docCount; i++) {
 			String documentName = findMax(similarityValues);
 			if (documentName != null) {
-				System.out.println(i + 1 + ". Document: " + documentName + ", Relevance score: " + similarityValues.get(documentName));
+				result.add(similarityValues.get(documentName));
+				//System.out.println(i + 1 + ". Document: " + documentName + ", Relevance score: " + similarityValues.get(documentName));
 				invObj.printWords(documentName);
 				similarityValues.remove(documentName);
 			} else {
-				System.out.println("\nOnly " + i + " relevant documents were there\n");
-				return;
+				//System.out.println("\nOnly " + i + " relevant documents were there\n");
+				return  result;
 			}
 		}
+		return result;
 	}
 	
 	/**
