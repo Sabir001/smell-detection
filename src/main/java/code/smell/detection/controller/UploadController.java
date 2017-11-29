@@ -17,6 +17,7 @@ import code.smell.detection.textualAnalysis.FileHandler;
 import code.smell.detection.textualAnalysis.InformationRetrievalTemplate;
 import code.smell.detection.textualAnalysis.MethodExtractor;
 import code.smell.detection.textualAnalysis.SmellDetector;
+import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
 
 @Controller
 public class UploadController {
@@ -34,6 +35,10 @@ public class UploadController {
 	
 	@Autowired
 	private SmellDetector smellDetector;
+	
+	@Autowired
+	private FileManipulation fileManipulation;
+	
 	
     @GetMapping("/uploadProject")
     public String index() {
@@ -74,9 +79,9 @@ public class UploadController {
             }
             
             smellDetector.initialization(changedJavaFiles, changedAllMethods, javaFileList);
-            smellDetector.createSourceDirectory();
-            smellDetector.createStopWordDirectory();
-            smellDetector.manageStopWords();
+            fileManipulation.createSourceDirectory();
+            fileManipulation.createStopWordDirectory();
+            fileManipulation.manageStopWords();
             
             List<ArrayList<String>> results = smellDetector.detectCodeSmell();
             

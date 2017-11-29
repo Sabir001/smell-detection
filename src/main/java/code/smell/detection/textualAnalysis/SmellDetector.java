@@ -1,6 +1,5 @@
 package code.smell.detection.textualAnalysis;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.FileCreation.StopWordFileCreation;
 import code.smell.detection.textualAnalysis.sd.DetectBlob;
 import code.smell.detection.textualAnalysis.sd.DetectFeatureEnvy;
 import code.smell.detection.textualAnalysis.sd.DetectLongMethod;
@@ -20,8 +18,6 @@ import code.smell.detection.textualAnalysis.sd.DetectPromiscousPackage;
 public class SmellDetector {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired
-	private StopWordFileCreation stopWordFileCreation;
 	
 	@Autowired
 	private DetectBlob detectBlob;
@@ -39,8 +35,6 @@ public class SmellDetector {
 	private DetectPromiscousPackage detectPromiscousPackage;
 	
 	
-	File sourceFolder = new File("Source Folder");
-	File stopWords = new File("Stop Word Directory");
 	
 	List<String> javaFiles = new ArrayList<>();
 	List<String> mainJavaFiles = new ArrayList<>();
@@ -65,33 +59,5 @@ public class SmellDetector {
 	}
 	
 	
-	public void createSourceDirectory(){
-		try {
-			if(!sourceFolder.exists()){
-				sourceFolder.mkdirs();
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-	}
 	
-	public void createStopWordDirectory(){
-		try {
-			if(!stopWords.exists()){
-				stopWords.mkdirs();
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-	}
-	
-	public void manageStopWords(){
-		try {
-			stopWordFileCreation.deleteFilesInStopWordDirectory();
-			stopWordFileCreation.deleteFilesInSourceDirectory();
-			stopWordFileCreation.createFilesInStopWordDirectory();
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-	}
 }
