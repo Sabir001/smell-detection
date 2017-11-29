@@ -55,19 +55,5 @@ public class StopWordFileCreation {
 		}
 	}
 	
-	public void deleteFilesInStopWordDirectory(){
-		try {
-			FileUtils.cleanDirectory(new File("Stop Word Directory"));
-		} catch (IOException e) {
-			log.error(e.getMessage());
-		}
-	}
 	
-	public void deleteFilesInSourceDirectory(){
-		try {
-			FileUtils.cleanDirectory(new File("Source Folder"));
-		} catch (IOException e) {
-			log.error(e.getMessage());
-		}
-	}
 }
