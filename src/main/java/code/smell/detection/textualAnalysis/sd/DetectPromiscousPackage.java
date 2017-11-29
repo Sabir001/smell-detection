@@ -8,12 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DetectPromiscousPackage {
+public class DetectPromiscousPackage implements ISmellDetector{
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods){
+
+	@Override
+	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
+			List<String> mainJavaFiles) {
 		List<String> result = new ArrayList<String>();
 		
 		return result;
 	}
+
 }
