@@ -1,6 +1,8 @@
 package code.smell.detection.textualAnalysis.sd;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,11 @@ public class DetectBlob implements ISmellDetector{
 			files.add(new File(i.toString()));
 			try {
 				files.get(i).createNewFile();
+				try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
+					br.write(arrayList.get(i));
+				} catch(Exception e2) {
+					log.error(e2.getMessage());
+				}
 			} catch (IOException e) {
 				log.error(e.getMessage());
 			}

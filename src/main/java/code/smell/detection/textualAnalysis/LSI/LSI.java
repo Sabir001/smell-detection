@@ -241,16 +241,18 @@ public class LSI {
 	 * 
 	 * Prepares the query entered by the user and then calls various functions to compute similarity and rank documents accordingly.
 	 */
-	public void handleQuery(String query) throws IOException {
+	public List<Double> handleQuery(String query) throws IOException {
 		Matrix queryVector = createQueryVector(query);
-		
+	
+		List<Double> result = new ArrayList<>();
 		if (eligibleQuery == true) {
 			TreeMap<String, Double> documentSimilarityValues = findSimilarities(queryVector);
-			displayRelevantDocuments(documentSimilarityValues, relevantDocs);
+			 result = displayRelevantDocuments(documentSimilarityValues, relevantDocs);
 			eligibleQuery = false;
 		} else {
-			System.out.println("The query you entered consists entirely of stop list words or words that don't appear in any documents");
+			log.info("No relevant doc");
 		}
+		return result;
 	}
 	
 	/**
