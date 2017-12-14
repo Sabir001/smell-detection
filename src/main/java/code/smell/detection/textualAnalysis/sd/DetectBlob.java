@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
+import code.smell.detection.textualAnalysis.LSI.LSI;
 
 @Component
 public class DetectBlob implements ISmellDetector{
@@ -58,8 +59,33 @@ public class DetectBlob implements ISmellDetector{
 	}
 
 	private Double decideSmell(ArrayList<String> arrayList) {
+		try {
+			LSI lsi = new LSI(fileManipulation.sourceFolderName, fileManipulation.stopWordFolderName);
+			lsi.createTermDocumentMatrix();
+			lsi.performSingularValueDecomposition();
+			Double[] avg = new Double[arrayList.size()];
+			for(int i = 0; i < arrayList.size(); i++) {
+				Double subTotal = 0.0;
+				List<Double> query = lsi.handleQuery(arrayList.get(i));
+				for(int j = 0; j < query.size(); j++) {
+					if(j != i) subTotal += query.get(j);
+				}
+				if(query.size() != 0 && query.size() != 1)
+					avg[i] = subTotal / (query.size() - 1);
+				else avg[i] = 1.0;
+			}
+			Double total = 0.0;
+			for(Double num : avg) {
+				total += num;
+			}
+			return total / arrayList.size();
+			
+		} catch (IOException e) {
+			log.error(e.getMessage());
+		}
 		
-		return 0.0;
+		
+		return 1.0;
 	}
 
 	private void makeNecessaryFilesFromMethod(ArrayList<String> arrayList) {
