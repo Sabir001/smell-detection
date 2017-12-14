@@ -1,12 +1,10 @@
 package code.smell.detection.textualAnalysis.FileCreation;
 
-import java.io.File;
+
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -44,7 +42,7 @@ public class StopWordFileCreation {
 	
 	public void createFilesInStopWordDirectory(){
 		try(
-				PrintWriter writer = new PrintWriter("Stop Words.txt", "UTF-8");
+				PrintWriter writer = new PrintWriter("Stop Word Directory\\Stop Words.txt", "UTF-8");
 				) {
 			writer.println(javaStopWords);
 			writer.println(englishStopWords);

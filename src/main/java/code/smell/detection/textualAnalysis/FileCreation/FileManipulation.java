@@ -20,7 +20,7 @@ public class FileManipulation {
 	@Autowired
 	private StopWordFileCreation stopWordFileCreation;
 	
-	File sourceFolder = new File("sourceFolderName");
+	File sourceFolder = new File(sourceFolderName);
 	File stopWords = new File(stopWordFolderName);
 	
 	
