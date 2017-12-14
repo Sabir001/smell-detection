@@ -78,7 +78,7 @@ public class UploadController {
             	}
             }
             
-            smellDetector.initialization(changedJavaFiles, changedAllMethods, javaFileList);
+            smellDetector.initialization(changedJavaFiles, changedAllMethods, javaFileList, allMethods);
             fileManipulation.createSourceDirectory();
             fileManipulation.createStopWordDirectory();
             fileManipulation.manageStopWords();

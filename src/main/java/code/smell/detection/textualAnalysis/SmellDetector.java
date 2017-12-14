@@ -39,21 +39,24 @@ public class SmellDetector {
 	List<String> javaFiles = new ArrayList<>();
 	List<String> mainJavaFiles = new ArrayList<>();
 	List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
+	List<ArrayList<String>> mainAllmethods = new ArrayList<ArrayList<String>>();
 	
-	public void initialization(List<String> javaFiles, List<ArrayList<String>> methods, List<String> mainJavaFiles){
+	public void initialization(List<String> javaFiles, List<ArrayList<String>> methods, List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods){
 		this.javaFiles = javaFiles;
 		this.methods = methods;
 		this.mainJavaFiles = mainJavaFiles;
+		this.mainAllmethods = mainAllmethods;
+		
 	}
 	
 	public List<ArrayList<String>> detectCodeSmell() {
 		List<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
 		
-		results.add((ArrayList<String>) detectBlob.detectSmell(javaFiles, methods, mainJavaFiles));
-		results.add((ArrayList<String>) detectFeatureEnvy.detectSmell(javaFiles, methods, mainJavaFiles));
-		results.add((ArrayList<String>) detectLongMethod.detectSmell(javaFiles, methods, mainJavaFiles));
-		results.add((ArrayList<String>) detectMisplacedClass.detectSmell(javaFiles, methods, mainJavaFiles));
-		results.add((ArrayList<String>) detectPromiscousPackage.detectSmell(javaFiles, methods, mainJavaFiles));
+		results.add((ArrayList<String>) detectBlob.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
+		results.add((ArrayList<String>) detectFeatureEnvy.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
+		results.add((ArrayList<String>) detectLongMethod.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
+		results.add((ArrayList<String>) detectMisplacedClass.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
+		results.add((ArrayList<String>) detectPromiscousPackage.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		
 		return results;
 	}

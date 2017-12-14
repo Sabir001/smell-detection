@@ -20,7 +20,7 @@ public class DetectLongMethod implements ISmellDetector{
 
 	@Override
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
-			List<String> mainJavaFiles) {
+			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		
 		return result;

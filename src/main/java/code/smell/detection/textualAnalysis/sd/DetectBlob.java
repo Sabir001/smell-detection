@@ -23,7 +23,7 @@ public class DetectBlob implements ISmellDetector{
 	
 	@Override
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
-			List<String> mainJavaFiles) {
+			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		for(int i = 0; i < methods.size(); i++) {
 			try {

@@ -45,7 +45,7 @@ public class FileHandler {
 						String tempFileName = zipEntry.toString();
 						String tempFileContent = IOUtils.toString(zipFile.getInputStream(zipEntry), StandardCharsets.UTF_8);
 						log.info(tempFileName);
-						javaFiles.add(tempFileName + "\n" +  tempFileContent);
+						javaFiles.add(tempFileName + System.lineSeparator() +  tempFileContent);
 						
 					}
 				}
