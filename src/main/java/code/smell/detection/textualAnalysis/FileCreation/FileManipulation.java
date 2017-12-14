@@ -13,11 +13,15 @@ import org.springframework.stereotype.Component;
 public class FileManipulation {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	public String stopWordFolderName = "Stop Word Directory";
+	public String sourceFolderName = "Source Folder";
+	
+	
 	@Autowired
 	private StopWordFileCreation stopWordFileCreation;
 	
-	File sourceFolder = new File("Source Folder");
-	File stopWords = new File("Stop Word Directory");
+	File sourceFolder = new File("sourceFolderName");
+	File stopWords = new File(stopWordFolderName);
 	
 	
 	public void createSourceDirectory(){
@@ -52,7 +56,7 @@ public class FileManipulation {
 	
 	public void deleteFilesInStopWordDirectory(){
 		try {
-			FileUtils.cleanDirectory(new File("Stop Word Directory"));
+			FileUtils.cleanDirectory(new File(stopWordFolderName));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
@@ -60,7 +64,7 @@ public class FileManipulation {
 	
 	public void deleteFilesInSourceDirectory(){
 		try {
-			FileUtils.cleanDirectory(new File("Source Folder"));
+			FileUtils.cleanDirectory(new File(sourceFolderName));
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}

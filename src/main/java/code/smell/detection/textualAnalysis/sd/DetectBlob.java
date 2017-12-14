@@ -41,7 +41,7 @@ public class DetectBlob implements ISmellDetector{
 	private void makeNecessaryFilesFromMethod(ArrayList<String> arrayList) {
 		ArrayList<File> files = new ArrayList<File>();
 		for(Integer i = 0; i < arrayList.size(); i++) {
-			files.add(new File(i.toString()));
+			files.add(new File(fileManipulation.sourceFolderName +  i.toString()));
 			try {
 				files.get(i).createNewFile();
 				try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
