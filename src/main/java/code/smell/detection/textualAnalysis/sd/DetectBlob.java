@@ -50,17 +50,22 @@ public class DetectBlob implements ISmellDetector{
 	}
 
 	private String getClassName(String string) {
-		if(string != null){
-			String firstLine = string.split(System.lineSeparator())[0];
-			return firstLine;
+		try {
+			if(string != null){
+				String firstLine = string.trim().split(System.lineSeparator())[0];
+				return firstLine;
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
 		}
 		log.info("getClassName invoked and string was null");
-		return null;
+		return "Could not fetch class name";
 	}
 
 	private Double decideSmell(ArrayList<String> arrayList) {
 		try {
-			LSI lsi = new LSI(fileManipulation.sourceFolderName, fileManipulation.stopWordFolderName);
+			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
+					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			Double[] avg = new Double[arrayList.size()];

@@ -14,6 +14,7 @@ public class FileManipulation {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public String stopWordFolderName = "Stop Word Directory";
+	public String stopWordFileName = "Stop Words.txt";
 	public String sourceFolderName = "Source Folder";
 	
 	
