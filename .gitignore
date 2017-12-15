@@ -1,3 +1,6 @@
+Source Folder/*
+Stop Word Directory/*
+
 ### Maven ###
 target/
 pom.xml.tag
