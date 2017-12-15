@@ -40,6 +40,11 @@
 				<div th:if="${message}">
 				    <h2>${message}</h2>
 				</div>
+				<div class = "col-md-6">
+					<c:forEach items="${results}" var="item">
+					  <c:out value="${item}"/>
+					</c:forEach>
+				</div>
 			</div>
 		</div>
 
