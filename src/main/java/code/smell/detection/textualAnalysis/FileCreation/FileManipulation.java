@@ -31,7 +31,7 @@ public class FileManipulation {
 				sourceFolder.mkdirs();
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 	
@@ -41,7 +41,7 @@ public class FileManipulation {
 				stopWords.mkdirs();
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class FileManipulation {
 			deleteFilesInSourceDirectory();
 			stopWordFileCreation.createFilesInStopWordDirectory();
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class FileManipulation {
 		try {
 			FileUtils.cleanDirectory(new File(stopWordFolderName));
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 	
@@ -67,7 +67,7 @@ public class FileManipulation {
 		try {
 			FileUtils.cleanDirectory(new File(sourceFolderName));
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 }

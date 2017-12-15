@@ -29,17 +29,20 @@ public class DetectLongMethod implements ISmellDetector{
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		
-		
-		
 		for(int i = 0; i < methods.size(); i++) {
-			String className = getClassName(mainJavaFiles.get(i));
-			for(int j = 0; j < methods.get(i).size(); j++) {
-				fileManipulation.deleteFilesInSourceDirectory();
-				makeNecessaryFilesFromStatements(methods.get(i).get(j));
-				Double LSIValue = decideSmell(methods.get(i).get(j));
-				if(LSIValue < .5) {
-					result.add(getMethodDeclaration(className + " and method: " + mainAllmethods.get(i).get(j)));
+			try {
+				String className = getClassName(mainJavaFiles.get(i));
+				for(int j = 0; j < methods.get(i).size(); j++) {
+					fileManipulation.deleteFilesInSourceDirectory();
+					makeNecessaryFilesFromStatements(methods.get(i).get(j));
+					Double LSIValue = decideSmell(methods.get(i).get(j));
+					if(LSIValue < .5) {
+						result.add(getMethodDeclaration(className + " and method: " + mainAllmethods.get(i).get(j)));
+					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e.getStackTrace().toString() + " in detectSmell()");
 			}
 		}
 		
@@ -53,7 +56,7 @@ public class DetectLongMethod implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch class name";
@@ -67,7 +70,7 @@ public class DetectLongMethod implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch method declaration";
@@ -101,7 +104,7 @@ public class DetectLongMethod implements ISmellDetector{
 			
 			return total / (arrayList.size() - 1);
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		
 		
@@ -123,11 +126,11 @@ public class DetectLongMethod implements ISmellDetector{
 						log.error(e2.getMessage() + " in makeNecessaryFilesFromStatements() - 1");
 					}
 				} catch (IOException e) {
-					log.error(e.getMessage() + " in makeNecessaryFilesFromStatements() - 2");
+					log.error(e.getStackTrace().toString() + " in makeNecessaryFilesFromStatements() - 2");
 				}
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		
 	}

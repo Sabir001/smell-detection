@@ -39,11 +39,12 @@ public class DetectBlob implements ISmellDetector{
 					try {
 						result.add(getClassName(mainJavaFiles.get(i)));
 					} catch (Exception e) {
-						log.error(e.getMessage());
+						log.error(e.getStackTrace().toString());
 					}
 				}
 			}catch(Exception e){
-				log.error(e.getMessage() + " in detectSmell()");
+				e.printStackTrace();
+				log.error(e.getStackTrace().toString() + " in detectSmell()");
 			}
 		}
 		return result;
@@ -56,7 +57,7 @@ public class DetectBlob implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch class name";
@@ -86,7 +87,9 @@ public class DetectBlob implements ISmellDetector{
 			return total / arrayList.size();
 			
 		} catch (IOException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
+		} catch (Exception e) {
+			log.error(e.getStackTrace().toString());
 		}
 		
 		
@@ -106,11 +109,11 @@ public class DetectBlob implements ISmellDetector{
 						log.error(e2.getMessage() + " in makeNecessaryFilesFromMethod() - 1");
 					}
 				} catch (IOException e) {
-					log.error(e.getMessage() + " in makeNecessaryFilesFromMethod() - 2");
+					log.error(e.getStackTrace().toString() + " in makeNecessaryFilesFromMethod() - 2");
 				}
 			}
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 }

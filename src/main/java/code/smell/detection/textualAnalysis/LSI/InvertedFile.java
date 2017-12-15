@@ -204,12 +204,10 @@ public class InvertedFile {
 
 				documentLength.put(fileName, wordCounter);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getStackTrace().toString());
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getStackTrace().toString());
 		}
 	}
 

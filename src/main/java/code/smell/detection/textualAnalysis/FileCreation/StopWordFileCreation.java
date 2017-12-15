@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class StopWordFileCreation {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	private static final String javaStopWords = "abstract assert boolean break byte"
+	public static final String javaStopWords = "abstract assert boolean break byte"
 			+ "case catch char class const continue default do double else enum"
 			+ "extends final finally float for goto if implements import"
 			+ "instanceof int interface long native new package private"
@@ -21,7 +21,7 @@ public class StopWordFileCreation {
 			+ "synchronized this throw throws transient try void volatile"
 			+ "while true false null";
 	
-	private static final String englishStopWords = "a about above after again against all am an"
+	public static final String englishStopWords = "a about above after again against all am an"
 			+ "and any are aren't as at be because been before being"
 			+ "below between both but by can't cannot could couldn't"
 			+ "did didn't do does doesn't doing don't down during each"
@@ -47,9 +47,9 @@ public class StopWordFileCreation {
 			writer.println(javaStopWords);
 			writer.println(englishStopWords);
 		} catch (FileNotFoundException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		} catch (UnsupportedEncodingException e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 	}
 	

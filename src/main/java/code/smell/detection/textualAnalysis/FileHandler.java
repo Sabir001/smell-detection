@@ -54,7 +54,7 @@ public class FileHandler {
 			}
 			
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(e.getStackTrace().toString());
 		}
 		return javaFiles;
 	}
