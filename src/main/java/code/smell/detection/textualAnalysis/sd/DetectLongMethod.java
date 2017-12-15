@@ -42,7 +42,7 @@ public class DetectLongMethod implements ISmellDetector{
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				log.error(e.getStackTrace().toString() + " in detectSmell()");
+				log.error(e.getMessage(), e);
 			}
 		}
 		
@@ -56,7 +56,7 @@ public class DetectLongMethod implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch class name";
@@ -70,7 +70,7 @@ public class DetectLongMethod implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch method declaration";
@@ -104,7 +104,7 @@ public class DetectLongMethod implements ISmellDetector{
 			
 			return total / (arrayList.size() - 1);
 		} catch (IOException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		
 		
@@ -123,14 +123,14 @@ public class DetectLongMethod implements ISmellDetector{
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
 						br.write(arrayList.get(i));
 					} catch(Exception e2) {
-						log.error(e2.getMessage() + " in makeNecessaryFilesFromStatements() - 1");
+						log.error(e2.getMessage(), e2);
 					}
 				} catch (IOException e) {
-					log.error(e.getStackTrace().toString() + " in makeNecessaryFilesFromStatements() - 2");
+					log.error(e.getMessage(), e);
 				}
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		
 	}

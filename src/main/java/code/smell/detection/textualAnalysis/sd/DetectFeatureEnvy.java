@@ -65,7 +65,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				log.error(e.getStackTrace().toString() + " in detectSmell()");
+				log.error(e.getMessage(), e);
 			}
 		}
 		
@@ -88,9 +88,9 @@ public class DetectFeatureEnvy implements ISmellDetector{
 			return total / query.size();
 			
 		} catch (IOException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		return 1.0;
 	}
@@ -102,12 +102,12 @@ public class DetectFeatureEnvy implements ISmellDetector{
 			try(BufferedWriter br = new BufferedWriter(new FileWriter(file.getAbsolutePath()))){
 				br.write(string);
 			} catch(Exception e2) {
-				log.error(e2.getMessage() + " in makeNecessaryFilesFromMethod() - 1");
+				log.error(e2.getMessage());
 			}
 		} catch (IOException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -118,7 +118,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch method declaration";
@@ -134,7 +134,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch class name";

@@ -47,9 +47,9 @@ public class StopWordFileCreation {
 			writer.println(javaStopWords);
 			writer.println(englishStopWords);
 		} catch (FileNotFoundException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		} catch (UnsupportedEncodingException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 	}
 	

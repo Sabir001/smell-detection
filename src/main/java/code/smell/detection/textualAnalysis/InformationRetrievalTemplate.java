@@ -47,7 +47,7 @@ public class InformationRetrievalTemplate {
 			stemmer();
 			tfIdf();
 		} catch(Exception e){
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 	}
 

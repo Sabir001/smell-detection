@@ -50,11 +50,11 @@ public class FileHandler {
 					}
 				}
 			} catch (IOException e1) {
-				log.error(e1.getMessage());
+				log.error(e1.getMessage(), e1);
 			}
 			
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		return javaFiles;
 	}

@@ -31,7 +31,7 @@ public class DetectBlob implements ISmellDetector{
 				try{
 					fileManipulation.deleteFilesInSourceDirectory();
 				}catch(Exception efm){
-					log.error(efm.getMessage() + " delete action in file manipulation");
+					log.error(efm.getMessage(), efm);
 				}
 				makeNecessaryFilesFromMethod(methods.get(i));
 				Double LSIValue = decideSmell(methods.get(i));
@@ -39,12 +39,12 @@ public class DetectBlob implements ISmellDetector{
 					try {
 						result.add(getClassName(mainJavaFiles.get(i)));
 					} catch (Exception e) {
-						log.error(e.getStackTrace().toString());
+						log.error(e.getMessage(), e);
 					}
 				}
 			}catch(Exception e){
 				e.printStackTrace();
-				log.error(e.getStackTrace().toString() + " in detectSmell()");
+				log.error(e.getMessage(), e);
 			}
 		}
 		return result;
@@ -57,7 +57,7 @@ public class DetectBlob implements ISmellDetector{
 				return firstLine;
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		log.info("getClassName invoked and string was null");
 		return "Could not fetch class name";
@@ -87,9 +87,9 @@ public class DetectBlob implements ISmellDetector{
 			return total / arrayList.size();
 			
 		} catch (IOException e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 		
 		
@@ -106,14 +106,14 @@ public class DetectBlob implements ISmellDetector{
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
 						br.write(arrayList.get(i));
 					} catch(Exception e2) {
-						log.error(e2.getMessage() + " in makeNecessaryFilesFromMethod() - 1");
+						log.error(e2.getMessage(), e2);
 					}
 				} catch (IOException e) {
-					log.error(e.getStackTrace().toString() + " in makeNecessaryFilesFromMethod() - 2");
+					log.error(e.getMessage(), e);
 				}
 			}
 		} catch (Exception e) {
-			log.error(e.getStackTrace().toString());
+			log.error(e.getMessage(), e);
 		}
 	}
 }
