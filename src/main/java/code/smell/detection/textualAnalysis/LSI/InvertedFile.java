@@ -37,19 +37,19 @@ public class InvertedFile {
 	 * Create a stop list from the stop-list file provided	
 	 */
 	public void createStopList() throws IOException {
-		FileInputStream fstream = null;
-		String line;
-		try {
-			fstream = new FileInputStream(stopListPath);
-		} catch (FileNotFoundException e) {
-			log.error(e.getMessage());
-		}
+		try (FileInputStream fstream = new FileInputStream(stopListPath)){
+			
+			String line;
+			
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-		while((line = br.readLine()) != null) {
-			stopWordList.add(line.trim().toLowerCase());
+			while((line = br.readLine()) != null) {
+				stopWordList.add(line.trim().toLowerCase());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -166,48 +166,51 @@ public class InvertedFile {
 	 * Parse a single file having path filePath and name fileName and populate word list and posting data
 	 */
 	private void parseFile(String filePath, String fileName) throws IOException {
-		FileInputStream fstream = null;
-		String line, word;
-		TreeMap<String, Integer> wordFreq = null;
-		int wordCounter = 0, i;
+		try (FileInputStream fstream = new FileInputStream(filePath)){
 
-		try {
-			fstream = new FileInputStream(filePath);
-		} catch (FileNotFoundException e) {
-			log.error(e.getMessage());
-		}
+			String line, word;
+			TreeMap<String, Integer> wordFreq = null;
+			int wordCounter = 0, i;
 
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			try (DataInputStream in = new DataInputStream(fstream);
+				BufferedReader br = new BufferedReader(new InputStreamReader(in));){
+				
 
-		while((line = br.readLine()) != null) {
-			String wordsInLine[] = line.split(whiteSpacePattern);
-			for (i = 0; i < wordsInLine.length; i++) {
-				word = wordsInLine[i].trim().toLowerCase();
-				if (isStopListWord(word)) {
-					wordCounter+=1;
-					continue;
-				}
-				if (wordList.containsKey(word)) {
-					wordFreq = wordOccurrence.get(word);
-					if (wordFreq.containsKey(fileName)) {
-						wordFreq.put(fileName, wordFreq.get(fileName) + 1);
-					} else {
-						wordFreq.put(fileName, 1);
-						wordList.put(word, wordList.get(word) + 1);
+				while((line = br.readLine()) != null) {
+					String wordsInLine[] = line.split(whiteSpacePattern);
+					for (i = 0; i < wordsInLine.length; i++) {
+						word = wordsInLine[i].trim().toLowerCase();
+						if (isStopListWord(word)) {
+							wordCounter+=1;
+							continue;
+						}
+						if (wordList.containsKey(word)) {
+							wordFreq = wordOccurrence.get(word);
+							if (wordFreq.containsKey(fileName)) {
+								wordFreq.put(fileName, wordFreq.get(fileName) + 1);
+							} else {
+								wordFreq.put(fileName, 1);
+								wordList.put(word, wordList.get(word) + 1);
+							}
+						} else {
+							wordList.put(word, 1);
+							wordFreq = new TreeMap<String, Integer>();
+							wordFreq.put(fileName, 1);
+							wordOccurrence.put(word, wordFreq);
+						}
+						wordCounter+=1;
 					}
-				} else {
-					wordList.put(word, 1);
-					wordFreq = new TreeMap<String, Integer>();
-					wordFreq.put(fileName, 1);
-					wordOccurrence.put(word, wordFreq);
 				}
-				wordCounter+=1;
-			}
-		}
 
-		in.close();
-		documentLength.put(fileName, wordCounter);
+				documentLength.put(fileName, wordCounter);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -272,23 +275,22 @@ public class InvertedFile {
 	 * Total number of words printed equals contextWords
 	 */
 	public void printWords(String documentName) throws IOException {
-		FileInputStream fstream = null;
-		int wordCounter = 0;
-		String line;
-		
-		try {
-			fstream = new FileInputStream(dirPath + "/" + documentName);
-		} catch (FileNotFoundException e) {
-			log.error(e.getMessage());
-		}
-		
-		DataInputStream in = new DataInputStream(fstream);
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		while ((line = br.readLine()) != null && wordCounter < contextWords) {
-			String [] words = line.split(whiteSpacePattern) ;
-			for (int i = 0; i < words.length && wordCounter < contextWords; i++, wordCounter++) {
-				System.out.print(words[i] + " ");
+		try (FileInputStream fstream = new FileInputStream(dirPath + "/" + documentName)){
+			
+			int wordCounter = 0;
+			String line;
+			
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			while ((line = br.readLine()) != null && wordCounter < contextWords) {
+				String [] words = line.split(whiteSpacePattern) ;
+				for (int i = 0; i < words.length && wordCounter < contextWords; i++, wordCounter++) {
+					System.out.print(words[i] + " ");
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		System.out.println("\n");
 	}
