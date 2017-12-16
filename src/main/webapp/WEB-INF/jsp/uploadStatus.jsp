@@ -37,12 +37,16 @@
 			<div class="col-lg-6 col-lg-offset-3">
 				<h1>Upload Status</h1>
 
-				<div th:if="${message}">
-				    <h2>${message}</h2>
+				<div>
+					<c:if test="${not empty message}">
+					    <h2>${message}</h2>
+					</c:if>
 				</div>
 				<div class = "col-md-6">
 					<c:forEach items="${results}" var="item">
-					  <c:out value="${item}"/>
+					 	<c:if test="${not empty item}">
+							<c:out value="${item}"/>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>
