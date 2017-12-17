@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
+import code.smell.detection.textualAnalysis.FileCreation.StopWordFileCreation;
 import code.smell.detection.textualAnalysis.LSI.LSI;
 
 @Component
@@ -87,17 +88,36 @@ public class DetectLongMethod implements ISmellDetector{
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			
-			List<String> arrayList = new ArrayList<String>(Arrays.asList(string.split(" ")));
-			Double[] avg = new Double[arrayList.size() - 1];
+			List<String> arrayList = new ArrayList<String>(Arrays.asList(string.trim().split(" ")));
+			List<Double> avg = new ArrayList<>();
 			
 			if(arrayList.size() < 2) {
 				return 1.0;
 			}
 			
 			for (int i = 0; i < arrayList.size() - 1; i++) {
+				if(StopWordFileCreation.englishStopWords.contains(arrayList.get(i))
+						|| StopWordFileCreation.javaStopWords.contains(arrayList.get(i))) {
+					continue;
+				}
 				List<Double> query = lsi.handleQuery(arrayList.get(i));
-				avg[i] = query.get(i+1);
+				Double highest = 0.0;
+				int index = 0;
+				for(int j = 0; j < query.size(); j++) {
+					if(query.get(j) > highest) {
+						index = j;
+						highest = query.get(j);
+					}
+				}
+				if(index < query.size() - 1) {
+					avg.add(query.get(index + 1));
+				}
 			}
+			
+			if(avg.size() < 3) {
+				return 1.0;
+			}
+			
 			Double total = 0.0;
 			for(Double num : avg) {
 				total += num;
@@ -114,7 +134,7 @@ public class DetectLongMethod implements ISmellDetector{
 
 
 	private void makeNecessaryFilesFromStatements(String string) {
-		List<String> arrayList = new ArrayList<String>(Arrays.asList(string.split(" ")));
+		List<String> arrayList = new ArrayList<String>(Arrays.asList(string.trim().split(" ")));
 		ArrayList<File> files = new ArrayList<File>();
 		try {
 			for(Integer i = 0; i < arrayList.size(); i++) {

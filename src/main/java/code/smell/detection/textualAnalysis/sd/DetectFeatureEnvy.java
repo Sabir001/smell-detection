@@ -23,12 +23,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 	@Autowired
 	private FileManipulation fileManipulation;
 	
-	@Autowired
-	private StopWordFileCreation stopWordFileCreation;
 	
-	
-	
-	@SuppressWarnings("static-access")
 	@Override
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
@@ -46,8 +41,8 @@ public class DetectFeatureEnvy implements ISmellDetector{
 					for(int k = 0; k < javaFiles.size(); k++) {
 						if(k != i) {
 							for(String word : wordsInMethod) {
-								if(stopWordFileCreation.englishStopWords.contains(word)
-										|| stopWordFileCreation.javaStopWords.contains(word)) {
+								if(StopWordFileCreation.englishStopWords.contains(word)
+										|| StopWordFileCreation.javaStopWords.contains(word)) {
 									continue;
 								}
 								if(javaFiles.get(k).contains(word)) {
