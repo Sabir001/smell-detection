@@ -61,6 +61,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 					}
 					if(LSIValueOfOwn < otherLsi) {
 						result.add(className + " and method: " + getMethodDeclaration(mainAllmethods.get(i).get(j)));
+						log.info("Found Feature envy. Data: " + result.get(result.size() - 1));
 					}
 				}
 			} catch (Exception e) {

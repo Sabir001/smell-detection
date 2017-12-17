@@ -58,6 +58,10 @@ public class SmellDetector {
 		results.add((ArrayList<String>) detectMisplacedClass.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		results.add((ArrayList<String>) detectPromiscousPackage.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		
+		for(ArrayList<String> list : results) {
+			log.info("Smell detection result: " + list.toString());
+		}
+		
 		return results;
 	}
 	

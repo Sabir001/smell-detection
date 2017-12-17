@@ -45,7 +45,9 @@
 				<div class = "col-md-6">
 					<c:forEach items="${results}" var="item">
 					 	<c:if test="${not empty item}">
-							<c:out value="${item}"/>
+							<h4>
+								<c:out value="${item}"/>
+							</h4>
 						</c:if>
 					</c:forEach>
 				</div>
