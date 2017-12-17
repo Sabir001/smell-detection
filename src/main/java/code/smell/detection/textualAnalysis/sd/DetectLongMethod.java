@@ -28,7 +28,7 @@ public class DetectLongMethod implements ISmellDetector{
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
-		
+		result.add("Long Method Result - ");
 		for(int i = 0; i < methods.size(); i++) {
 			try {
 				String className = getClassName(mainJavaFiles.get(i));
@@ -36,7 +36,7 @@ public class DetectLongMethod implements ISmellDetector{
 					fileManipulation.deleteFilesInSourceDirectory();
 					makeNecessaryFilesFromStatements(methods.get(i).get(j));
 					Double LSIValue = decideSmell(methods.get(i).get(j));
-					if(LSIValue < .5) {
+					if(LSIValue < threshold) {
 						result.add(getMethodDeclaration(className + " and method: " + mainAllmethods.get(i).get(j)));
 					}
 				}

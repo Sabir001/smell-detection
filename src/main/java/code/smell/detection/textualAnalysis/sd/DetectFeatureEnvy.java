@@ -33,7 +33,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
-		
+		result.add("Feature Envy Result - ");
 		for(int i = 0; i < methods.size(); i++) {
 			try {
 				String className = getClassName(mainJavaFiles.get(i));

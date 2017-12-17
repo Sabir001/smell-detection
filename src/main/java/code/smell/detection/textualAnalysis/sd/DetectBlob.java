@@ -26,6 +26,7 @@ public class DetectBlob implements ISmellDetector{
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
+		result.add("Blob Result - ");
 		for(int i = 0; i < methods.size(); i++) {
 			try {
 				try{
@@ -35,7 +36,7 @@ public class DetectBlob implements ISmellDetector{
 				}
 				makeNecessaryFilesFromMethod(methods.get(i));
 				Double LSIValue = decideSmell(methods.get(i));
-				if(LSIValue < .5){
+				if(LSIValue < threshold){
 					try {
 						result.add(getClassName(mainJavaFiles.get(i)));
 					} catch (Exception e) {
