@@ -72,11 +72,6 @@ public class UploadController {
             List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
             List<String> changedJavaFiles = informationRetrievalTemplate.javaFiles;
             
-            for(ArrayList<String> method : changedAllMethods) {
-            	for(String word : method) {
-            		log.info(word);
-            	}
-            }
             
             smellDetector.initialization(changedJavaFiles, changedAllMethods, javaFileList, allMethods);
             fileManipulation.createSourceDirectory();
