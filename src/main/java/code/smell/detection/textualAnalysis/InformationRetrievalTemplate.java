@@ -40,12 +40,13 @@ public class InformationRetrievalTemplate {
 	public void setLists(List<String> javaFiles, List<ArrayList<String>> methods){
 		try{
 			setMethods(methods);
+			setJavaFiles(javaFiles);
 			
 			camelCaseSplit();
 			makeLowerCase();
 			specialCharacterRemoval();
 			stemmer();
-			tfIdf();
+			//tfIdf();
 		} catch(Exception e){
 			log.error(e.getMessage(), e);
 		}

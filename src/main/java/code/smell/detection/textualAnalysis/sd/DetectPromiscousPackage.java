@@ -44,6 +44,9 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		    String packageName = mapEntry.getKey();
 		    List<String> javaClasses = mapEntry.getValue();
 
+		    log.info("SearchJ " + packageName);
+		    log.info("SearchJ " + javaClasses.toString());
+		    
 		    fileManipulation.deleteFilesInSourceDirectory();
 		    makeNecessaryFilesFromPackage(javaClasses);
 		    

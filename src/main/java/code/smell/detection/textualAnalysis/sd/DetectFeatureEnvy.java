@@ -47,7 +47,9 @@ public class DetectFeatureEnvy implements ISmellDetector{
 								if(mainJavaFiles.get(k).contains(word)) {
 									fileManipulation.deleteFilesInSourceDirectory();
 									makeNecessaryFilesFromClass(javaFiles.get(k));
-									otherLsi = Math.max(otherLsi, getLsiValue(methods.get(i).get(j)));
+									double tempLsi = getLsiValue(methods.get(i).get(j));
+									if(tempLsi < 1 && tempLsi > otherLsi)
+										otherLsi = tempLsi;
 									break;
 								}
 							}

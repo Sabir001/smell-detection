@@ -65,6 +65,8 @@ public class UploadController {
 
             List<String> javaFileList = fileHandler.getJavaFiles(file);
             
+            
+            
             List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
             
             informationRetrievalTemplate.setLists(javaFileList, allMethods);
