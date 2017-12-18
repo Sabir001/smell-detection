@@ -1,8 +1,13 @@
 package code.smell.detection.textualAnalysis.sd;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
+import code.smell.detection.textualAnalysis.LSI.LSI;
 
 @Component
 public class DetectMisplacedClass implements ISmellDetector {
@@ -35,9 +41,65 @@ public class DetectMisplacedClass implements ISmellDetector {
 			map.get(packageName).add(data);
 		}
 		
-		
+		for (Entry<String, List<String>> mapEntry : map.entrySet()) {
+		    List<String> javaClasses = mapEntry.getValue();
+
+		    fileManipulation.deleteFilesInSourceDirectory();
+		    makeNecessaryFilesFromPackage(javaClasses);
+		    
+		    for(String javaClass : javaClasses){
+		    	Double LsiValue = getLsiValue(javaClass);
+		    	if(LsiValue < threshold){
+		    		result.add(getClassName(javaClass));
+		    	}
+		    }
+		}
 		
 		return result;
+	}
+	
+	private Double getLsiValue(String javaClass) {
+		try {
+			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
+					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
+			lsi.createTermDocumentMatrix();
+			lsi.performSingularValueDecomposition();
+			
+			List<Double> query = lsi.handleQuery(javaClass);
+			Double total = 0.0;
+			for(Double num : query) {
+				total += num;
+			}
+			
+			return total / query.size();
+			
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return 1.0;
+	}
+
+	private void makeNecessaryFilesFromPackage(List<String> javaClasses) {
+		ArrayList<File> files = new ArrayList<File>();
+		try {
+			for(Integer i = 0; i < javaClasses.size(); i++) {
+				files.add(new File(fileManipulation.sourceFolderName + "\\" +  i.toString() + ".txt"));
+				try {
+					files.get(i).createNewFile();
+					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
+						br.write(javaClasses.get(i));
+					} catch(Exception e2) {
+						log.error(e2.getMessage(), e2);
+					}
+				} catch (IOException e) {
+					log.error(e.getMessage(), e);
+				}
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
 	}
 	
 	private String getClassName(String string) {

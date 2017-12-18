@@ -48,7 +48,7 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		    fileManipulation.deleteFilesInSourceDirectory();
 		    makeNecessaryFilesFromPackage(javaClasses);
 		    
-		    Double LsiValue = detectSmell(javaClasses);
+		    Double LsiValue = getLsiValue(javaClasses);
 		    
 		    if(LsiValue < threshold){
 		    	result.add(packageName);
@@ -59,7 +59,7 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		return result;
 	}
 	
-	private Double detectSmell(List<String> javaClasses) {
+	private Double getLsiValue(List<String> javaClasses) {
 		try {
 			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
 					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
