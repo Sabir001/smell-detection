@@ -97,7 +97,11 @@ public class DetectPromiscousPackage implements ISmellDetector{
 				try {
 					files.get(i).createNewFile();
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
-						br.write(javaClasses.get(i));
+						String[] lines = javaClasses.get(i).split(System.lineSeparator());
+						for(int k = 1; k < lines.length; k++) {
+							br.write(lines[k]);
+						}
+						
 					} catch(Exception e2) {
 						log.error(e2.getMessage(), e2);
 					}

@@ -224,7 +224,7 @@ public class LSI {
 			if (documentName != null) {
 				result.add(similarityValues.get(documentName));
 				//System.out.println(i + 1 + ". Document: " + documentName + ", Relevance score: " + similarityValues.get(documentName));
-				invObj.printWords(documentName);
+				//invObj.printWords(documentName);
 				similarityValues.remove(documentName);
 			} else {
 				//System.out.println("\nOnly " + i + " relevant documents were there\n");
