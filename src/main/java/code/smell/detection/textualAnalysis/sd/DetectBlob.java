@@ -85,7 +85,7 @@ public class DetectBlob implements ISmellDetector{
 			for(Double num : avg) {
 				total += num;
 			}
-			return total / arrayList.size();
+			return total / avg.length;
 			
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
