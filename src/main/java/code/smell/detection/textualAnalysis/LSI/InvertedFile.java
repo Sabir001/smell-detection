@@ -41,12 +41,15 @@ public class InvertedFile {
 			
 			String line;
 			
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-			while((line = br.readLine()) != null) {
-				stopWordList.add(line.trim().toLowerCase());
+			try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(fstream)));){
+				while((line = br.readLine()) != null) {
+					stopWordList.add(line.trim().toLowerCase());
+				}
+			} catch (Exception e) {
+				log.error(e.getMessage(), e);
 			}
+
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,8 +175,7 @@ public class InvertedFile {
 			TreeMap<String, Integer> wordFreq = null;
 			int wordCounter = 0, i;
 
-			try (DataInputStream in = new DataInputStream(fstream);
-				BufferedReader br = new BufferedReader(new InputStreamReader(in));){
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(fstream)));){
 				
 
 				while((line = br.readLine()) != null) {
@@ -264,32 +266,4 @@ public class InvertedFile {
 		return documentList;
 	}
 
-	/**
-	 * 
-	 * @param documentName
-	 * @throws IOException
-	 * 
-	 * Print words from the document <documentName>. 
-	 * Total number of words printed equals contextWords
-	 */
-	public void printWords(String documentName) throws IOException {
-		try (FileInputStream fstream = new FileInputStream(dirPath + "/" + documentName)){
-			
-			int wordCounter = 0;
-			String line;
-			
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			while ((line = br.readLine()) != null && wordCounter < contextWords) {
-				String [] words = line.split(whiteSpacePattern) ;
-				for (int i = 0; i < words.length && wordCounter < contextWords; i++, wordCounter++) {
-					System.out.print(words[i] + " ");
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("\n");
-	}
 }

@@ -35,6 +35,9 @@ public class DetectFeatureEnvy implements ISmellDetector{
 					fileManipulation.deleteFilesInSourceDirectory();
 					makeNecessaryFilesFromClass(javaFiles.get(i));
 					Double LSIValueOfOwn = getLsiValue(methods.get(i).get(j));
+					if(LSIValueOfOwn == 0.0) {
+						LSIValueOfOwn = 1.0;
+					}
 					String[] wordsInMethod = mainAllmethods.get(i).get(j).trim().split(" ");
 					Double otherLsi = -1.0;
 					for(int k = 0; k < javaFiles.size(); k++) {
@@ -81,15 +84,15 @@ public class DetectFeatureEnvy implements ISmellDetector{
 			for(Double num : query) {
 				total += num;
 			}
-			
-			return total / query.size();
-			
+			if(query.size() > 0)
+				return total / query.size();
+			return 0.0;
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		}
-		return 1.0;
+		return 0.0;
 	}
 
 	private void makeNecessaryFilesFromClass(String string) {
