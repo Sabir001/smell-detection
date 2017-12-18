@@ -80,7 +80,11 @@ public class UploadController {
             
             List<ArrayList<String>> results = smellDetector.detectCodeSmell();
             
-            redirectAttributes.addFlashAttribute("results", results );
+            redirectAttributes.addFlashAttribute("resultsOfBlob", results.get(0) );
+            redirectAttributes.addFlashAttribute("resultsOfFeatureEnvy", results.get(1) );
+            redirectAttributes.addFlashAttribute("resultsOfLongMethod", results.get(2) );
+            redirectAttributes.addFlashAttribute("resultsOfMisplacedClass", results.get(3) );
+            redirectAttributes.addFlashAttribute("resultsOfPromiscuousPackage", results.get(4) );
             
             redirectAttributes.addFlashAttribute("message", "Code Smell Result: Successful" );
             

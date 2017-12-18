@@ -29,7 +29,6 @@ public class DetectPromiscousPackage implements ISmellDetector{
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
-		result.add("Promiscuous Package Result -");
 		
 		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 		

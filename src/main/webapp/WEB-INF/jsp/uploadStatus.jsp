@@ -42,15 +42,67 @@
 					    <h2>${message}</h2>
 					</c:if>
 				</div>
-				<div class = "col-md-6">
-					<c:forEach items="${results}" var="item">
-					 	<c:if test="${not empty item}">
-							<h4>
-								<c:out value="${item}"/>
-							</h4>
-						</c:if>
-					</c:forEach>
-				</div>
+				
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-3">
+				<h2> Results of Blob:</h2>
+				<c:forEach items="${resultsOfBlob}" var="item">
+				 	<c:if test="${not empty item}">
+						<p>
+							<c:out value="${item}"/>
+						</p>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-3">
+				<h2> Results of Feature Envy:</h2>
+				<c:forEach items="${resultsOfFeatureEnvy}" var="item">
+				 	<c:if test="${not empty item}">
+						<p>
+							<c:out value="${item}"/>
+						</p>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-3">
+				<h2> Results of Long Method:</h2>
+				<c:forEach items="${resultsOfLongMethod}" var="item">
+				 	<c:if test="${not empty item}">
+						<p>
+							<c:out value="${item}"/>
+						</p>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-3">
+				<h2> Results of Misplaced Class:</h2>
+				<c:forEach items="${resultsOfMisplacedClass}" var="item">
+				 	<c:if test="${not empty item}">
+						<p>
+							<c:out value="${item}"/>
+						</p>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+		<div class = "row">
+			<div class = "col-md-6 col-md-offset-3">
+				<h2> Results of Promiscuous Package:</h2>
+				<c:forEach items="${resultsOfPromiscuousPackage}" var="item">
+				 	<c:if test="${not empty item}">
+						<p>
+							<c:out value="${item}"/>
+						</p>
+					</c:if>
+				</c:forEach>
 			</div>
 		</div>
 

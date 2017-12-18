@@ -29,7 +29,6 @@ public class DetectMisplacedClass implements ISmellDetector {
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
-		result.add("Misplaced Class Result - ");
 		
 		HashMap<String, List<String>> map = new HashMap<String, List<String>>();
 		
