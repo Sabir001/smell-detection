@@ -37,6 +37,9 @@ public class DetectLongMethod implements ISmellDetector{
 					ArrayList <Double> lsiTot = new ArrayList<>();
 					for(int k = 0; k < methods.get(i).get(j).size() - 1; k++){
 						fileManipulation.deleteFilesInSourceDirectory();
+						if(methods.get(i).get(j).get(k).trim().length() < 4 || methods.get(i).get(j).get(k + 1).trim().length() < 4){
+							continue;
+						}
 						makeNecessaryFilesFromStatements(methods.get(i).get(j).get(k), methods.get(i).get(j).get(k + 1));
 						lsiTot.add(decideSmell(methods.get(i).get(j).get(k)));
 					}
