@@ -52,9 +52,9 @@ public class DetectLongMethod implements ISmellDetector{
 					else 
 						LSIValue = 1.0;
 					
-					if(LSIValue < threshold) {
+					if(LSIValue < threshold && LSIValue > 0.0) {
 						result.add(getMethodDeclaration("Class: " + className + "\nAnd method: " + getMethodDeclaration(mainAllmethods.get(i).get(j))));
-						log.info("Long Method found. Data: " + result.get(result.size() - 1));
+						log.info("Long Method found. Data: " + LSIValue + result.get(result.size() - 1));
 					}
 				}
 			} catch (Exception e) {
@@ -104,11 +104,11 @@ public class DetectLongMethod implements ISmellDetector{
 			lsi.performSingularValueDecomposition();
 			
 			List<Double> query = lsi.handleQuery(string);
+			
 			Double min = 1.0;
-			if(query.size() == 2){
-				for(int i = 0; i < query.size(); i++){
-					min = Math.min(min, query.get(i));
-				}
+			
+			if(query.size() > 0) {
+				min = query.get(query.size() - 1);
 			}
 			
 			

@@ -60,7 +60,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 									}
 									
 									double tempLsi = getLsiValue(methodStringOfOther);
-									if(tempLsi < 1 && tempLsi > otherLsi)
+									if(tempLsi < .95 && tempLsi > otherLsi )
 										otherLsi = tempLsi;
 									break;
 								}
@@ -69,7 +69,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 					}
 					if(LSIValueOfOwn < otherLsi) {
 						result.add("Class: " + className + System.lineSeparator() + "And method: " + getMethodDeclaration(mainAllmethods.get(i).get(j)));
-						log.info("Found Feature envy. Data: " + result.get(result.size() - 1));
+						log.info("Found Feature envy. Data: " + otherLsi + result.get(result.size() - 1) );
 					}
 				}
 			} catch (Exception e) {
