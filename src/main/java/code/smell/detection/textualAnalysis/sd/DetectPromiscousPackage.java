@@ -53,7 +53,7 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		    Double LsiValue = getLsiValue(javaClasses);
 		    
 		    if(LsiValue < threshold){
-		    	result.add(packageName);
+		    	result.add("Package: " + packageName);
 		    }
 		}
 		

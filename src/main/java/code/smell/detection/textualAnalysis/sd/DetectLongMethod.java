@@ -53,7 +53,7 @@ public class DetectLongMethod implements ISmellDetector{
 						LSIValue = 1.0;
 					
 					if(LSIValue < threshold) {
-						result.add(getMethodDeclaration(className + " and method: " + mainAllmethods.get(i).get(j)));
+						result.add(getMethodDeclaration("Class: " + className + "\nAnd method: " + getMethodDeclaration(mainAllmethods.get(i).get(j))));
 						log.info("Long Method found. Data: " + result.get(result.size() - 1));
 					}
 				}

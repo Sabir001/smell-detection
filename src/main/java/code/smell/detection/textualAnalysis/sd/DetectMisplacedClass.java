@@ -49,7 +49,7 @@ public class DetectMisplacedClass implements ISmellDetector {
 		    for(String javaClass : javaClasses){
 		    	Double LsiValue = getLsiValue(javaClass);
 		    	if(LsiValue < threshold){
-		    		result.add(getClassName(javaClass));
+		    		result.add("Class: " + getClassName(javaClass));
 		    	}
 		    }
 		}

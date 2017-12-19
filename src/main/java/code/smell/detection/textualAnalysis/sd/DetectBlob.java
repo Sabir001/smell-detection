@@ -37,7 +37,7 @@ public class DetectBlob implements ISmellDetector{
 				Double LSIValue = decideSmell(methods.get(i));
 				if(LSIValue < threshold){
 					try {
-						result.add(getClassName(mainJavaFiles.get(i)));
+						result.add("Class: " + getClassName(mainJavaFiles.get(i)));
 						log.info("Blob detected. Data: " + result.get(result.size() - 1));
 					} catch (Exception e) {
 						log.error(e.getMessage(), e);
