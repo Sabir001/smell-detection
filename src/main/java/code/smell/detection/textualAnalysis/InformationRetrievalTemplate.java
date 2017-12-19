@@ -19,7 +19,7 @@ public class InformationRetrievalTemplate {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public List<String> javaFiles = new ArrayList<>();
-	public List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
+	public List<ArrayList<ArrayList<String>>> methods = new ArrayList<ArrayList<ArrayList<String>>>();
 	
 	@Autowired
 	private CamelCaseSpliter camelCaseSpliter;
@@ -37,7 +37,7 @@ public class InformationRetrievalTemplate {
 	private TfIdf tfidf;
 	
 	
-	public void setLists(List<String> javaFiles, List<ArrayList<String>> methods){
+	public void setLists(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods){
 		try{
 			setMethods(methods);
 			setJavaFiles(javaFiles);
@@ -54,15 +54,20 @@ public class InformationRetrievalTemplate {
 
 
 	private void tfIdf() {
-		List<ArrayList<String>> changedMethods = tfidf.tfIdfCheckInAllMethods(methods);
-		
+		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
+		for(List<ArrayList<String>> list : methods){
+			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
+		}
 		
 		setMethods(changedMethods);
 	}
 
 
 	private void stemmer() {
-		List<ArrayList<String>> changedMethods = stemmer.stemAllMethods(methods);
+		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
+		for(List<ArrayList<String>> list : methods){
+			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
+		}
 		List<String> changedFiles = stemmer.stemAllJavaFiles(javaFiles);
 		
 		setJavaFiles(changedFiles);
@@ -71,7 +76,10 @@ public class InformationRetrievalTemplate {
 
 	private void specialCharacterRemoval() {
 		List<String> changedFiles = specialCharecterRemover.removeSpecialCharacterOfAllJavaFiles(javaFiles);
-		List<ArrayList<String>> changedMethods = specialCharecterRemover.removeSpecialCharacterOfAllMethods(methods);
+		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
+		for(List<ArrayList<String>> list : methods){
+			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
+		}
 		
 		setJavaFiles(changedFiles);
 		setMethods(changedMethods);
@@ -79,7 +87,10 @@ public class InformationRetrievalTemplate {
 
 	private void makeLowerCase() {
 		List<String> changedFiles = lowerCaseConverter.makeLowerCaseAllJavaFiles(javaFiles);
-		List<ArrayList<String>> changedMethods = lowerCaseConverter.makeLowerCaseAllMethods(methods);
+		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
+		for(List<ArrayList<String>> list : methods){
+			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
+		}
 		
 		setJavaFiles(changedFiles);
 		setMethods(changedMethods);
@@ -87,7 +98,10 @@ public class InformationRetrievalTemplate {
 
 	private void camelCaseSplit() {
 		List<String> changedFiles = camelCaseSpliter.splitAllJavaFiles(javaFiles);
-		List<ArrayList<String>> changedMethods = camelCaseSpliter.splitAllMethods(methods);
+		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
+		for(List<ArrayList<String>> list : methods){
+			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
+		}
 		
 		setJavaFiles(changedFiles);
 		setMethods(changedMethods);
@@ -97,7 +111,7 @@ public class InformationRetrievalTemplate {
 		this.javaFiles = javaFiles;
 	}
 	
-	private void setMethods(List<ArrayList<String>> methods) {
+	private void setMethods(List<ArrayList<ArrayList<String>>> methods) {
 		this.methods = methods;
 	}
 

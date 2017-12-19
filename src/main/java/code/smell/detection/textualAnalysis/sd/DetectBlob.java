@@ -23,7 +23,7 @@ public class DetectBlob implements ISmellDetector{
 	private FileManipulation fileManipulation;
 	
 	@Override
-	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
+	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		for(int i = 0; i < methods.size(); i++) {
@@ -63,7 +63,7 @@ public class DetectBlob implements ISmellDetector{
 		return "Could not fetch class name";
 	}
 
-	private Double decideSmell(ArrayList<String> arrayList) {
+	private Double decideSmell(ArrayList<ArrayList<String>> arrayList) {
 		try {
 			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
 					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
@@ -72,7 +72,11 @@ public class DetectBlob implements ISmellDetector{
 			Double[] avg = new Double[arrayList.size()];
 			for(int i = 0; i < arrayList.size(); i++) {
 				Double subTotal = 0.0;
-				List<Double> query = lsi.handleQuery(arrayList.get(i));
+				String queryString = "";
+				for(String line : arrayList.get(i)){
+					queryString += line;
+				}
+				List<Double> query = lsi.handleQuery(queryString);
 				for(int j = 0; j < query.size(); j++) {
 					if(j != i) subTotal += query.get(j);
 				}
@@ -98,7 +102,7 @@ public class DetectBlob implements ISmellDetector{
 		return 1.0;
 	}
 
-	private void makeNecessaryFilesFromMethod(ArrayList<String> arrayList) {
+	private void makeNecessaryFilesFromMethod(ArrayList<ArrayList<String>> arrayList) {
 		ArrayList<File> files = new ArrayList<File>();
 		try {
 			for(Integer i = 0; i < arrayList.size(); i++) {
@@ -106,7 +110,9 @@ public class DetectBlob implements ISmellDetector{
 				try {
 					files.get(i).createNewFile();
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
-						br.write(arrayList.get(i));
+						for(String line : arrayList.get(i)){
+							br.write(line);
+						}
 					} catch(Exception e2) {
 						log.error(e2.getMessage(), e2);
 					}

@@ -1,6 +1,7 @@
 package code.smell.detection.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -69,9 +70,11 @@ public class UploadController {
             
             List<ArrayList<String>> allMethods = methodExtractor.getMethods(javaFileList);
             
-            informationRetrievalTemplate.setLists(javaFileList, allMethods);
+            List<ArrayList<ArrayList<String>>> statements = getStatements(allMethods);
             
-            List<ArrayList<String>>  changedAllMethods = informationRetrievalTemplate.methods;
+            informationRetrievalTemplate.setLists(javaFileList, statements);
+            
+            List<ArrayList<ArrayList<String>>>  changedAllMethods = informationRetrievalTemplate.methods;
             List<String> changedJavaFiles = informationRetrievalTemplate.javaFiles;
             
             
@@ -97,7 +100,26 @@ public class UploadController {
         return "redirect:/uploadStatus";
     }
 
-    @GetMapping("/uploadStatus")
+    private List<ArrayList<ArrayList<String>>> getStatements(List<ArrayList<String>> allMethods) {
+    	List<ArrayList<ArrayList<String>>> statements = new ArrayList<>();
+    	
+    	for(ArrayList<String> list: allMethods){
+    		ArrayList<ArrayList<String>> ClassFiles = new ArrayList<>();
+    		for(String method : list){
+    			String[] lines = method.trim().split(";");
+    			List<String> linesList = new ArrayList<>();
+    			for(String line : lines){
+    				linesList.add(line);
+    			}
+    			ClassFiles.add((ArrayList<String>) linesList);
+    		}
+    		statements.add(ClassFiles);
+    	}
+    	
+    	return statements;
+	}
+
+	@GetMapping("/uploadStatus")
     public String uploadStatus() {
     	log.info("Upload Status invoked");
         return "uploadStatus";

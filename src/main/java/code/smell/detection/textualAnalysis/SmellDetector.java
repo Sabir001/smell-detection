@@ -38,10 +38,10 @@ public class SmellDetector {
 	
 	List<String> javaFiles = new ArrayList<>();
 	List<String> mainJavaFiles = new ArrayList<>();
-	List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
+	List<ArrayList<ArrayList<String>>> methods = new ArrayList<>();
 	List<ArrayList<String>> mainAllmethods = new ArrayList<ArrayList<String>>();
 	
-	public void initialization(List<String> javaFiles, List<ArrayList<String>> methods, List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods){
+	public void initialization(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods, List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods){
 		this.javaFiles = javaFiles;
 		this.methods = methods;
 		this.mainJavaFiles = mainJavaFiles;

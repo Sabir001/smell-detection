@@ -26,7 +26,7 @@ public class DetectMisplacedClass implements ISmellDetector {
 	
 
 	@Override
-	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
+	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		

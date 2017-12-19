@@ -23,19 +23,32 @@ public class DetectLongMethod implements ISmellDetector{
 
 	@Autowired
 	private FileManipulation fileManipulation;
-	
 
 	@Override
-	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
+	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		for(int i = 0; i < methods.size(); i++) {
 			try {
 				String className = getClassName(mainJavaFiles.get(i));
 				for(int j = 0; j < methods.get(i).size(); j++) {
-					fileManipulation.deleteFilesInSourceDirectory();
-					makeNecessaryFilesFromStatements(methods.get(i).get(j));
-					Double LSIValue = decideSmell(methods.get(i).get(j));
+					
+					Double LSIValue = 0.0;
+					ArrayList <Double> lsiTot = new ArrayList<>();
+					for(int k = 0; k < methods.get(i).get(j).size() - 1; k++){
+						fileManipulation.deleteFilesInSourceDirectory();
+						makeNecessaryFilesFromStatements(methods.get(i).get(j).get(k), methods.get(i).get(j).get(k + 1));
+						lsiTot.add(decideSmell(methods.get(i).get(j).get(k)));
+					}
+					
+					for(Double val : lsiTot){
+						LSIValue += val;
+					}
+					if(lsiTot.size() > 0)
+						LSIValue = LSIValue / lsiTot.size();
+					else 
+						LSIValue = 1.0;
+					
 					if(LSIValue < threshold) {
 						result.add(getMethodDeclaration(className + " and method: " + mainAllmethods.get(i).get(j)));
 						log.info("Long Method found. Data: " + result.get(result.size() - 1));
@@ -87,42 +100,17 @@ public class DetectLongMethod implements ISmellDetector{
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			
-			List<String> arrayList = new ArrayList<String>(Arrays.asList(string.trim().split(" ")));
-			List<Double> avg = new ArrayList<>();
-			
-			if(arrayList.size() < 2) {
-				return 1.0;
-			}
-			
-			for (int i = 0; i < arrayList.size() - 1; i++) {
-				if(StopWordFileCreation.englishStopWords.contains(arrayList.get(i))
-						|| StopWordFileCreation.javaStopWords.contains(arrayList.get(i))) {
-					continue;
-				}
-				List<Double> query = lsi.handleQuery(arrayList.get(i));
-				Double highest = 0.0;
-				int index = 0;
-				for(int j = 0; j < query.size(); j++) {
-					if(query.get(j) > highest) {
-						index = j;
-						highest = query.get(j);
-					}
-				}
-				if(index < query.size() - 1) {
-					avg.add(query.get(index + 1));
+			List<Double> query = lsi.handleQuery(string);
+			Double min = 1.0;
+			if(query.size() == 2){
+				for(int i = 0; i < query.size(); i++){
+					min = Math.min(min, query.get(i));
 				}
 			}
 			
-			if(avg.size() < 3) {
-				return 1.0;
-			}
 			
-			Double total = 0.0;
-			for(Double num : avg) {
-				total += num;
-			}
+			return min;
 			
-			return total / (arrayList.size() - 1);
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
 		}
@@ -132,22 +120,27 @@ public class DetectLongMethod implements ISmellDetector{
 	}
 
 
-	private void makeNecessaryFilesFromStatements(String string) {
-		List<String> arrayList = new ArrayList<String>(Arrays.asList(string.trim().split(" ")));
+	private void makeNecessaryFilesFromStatements(String string, String string2) {
 		ArrayList<File> files = new ArrayList<File>();
 		try {
-			for(Integer i = 0; i < arrayList.size(); i++) {
-				files.add(new File(fileManipulation.sourceFolderName + "\\" +  i.toString() + ".txt"));
-				try {
-					files.get(i).createNewFile();
-					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
-						br.write(arrayList.get(i));
-					} catch(Exception e2) {
-						log.error(e2.getMessage(), e2);
-					}
-				} catch (IOException e) {
-					log.error(e.getMessage(), e);
+			files.add(new File(fileManipulation.sourceFolderName + "\\File1.txt"));
+			files.add(new File(fileManipulation.sourceFolderName + "\\File2.txt"));
+			try {
+				files.get(0).createNewFile();
+				files.get(1).createNewFile();
+				
+				try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(0).getAbsolutePath()))){
+					br.write(string);
+				} catch(Exception e2) {
+					log.error(e2.getMessage(), e2);
 				}
+				try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(1).getAbsolutePath()))){
+					br.write(string2);
+				} catch(Exception e2) {
+					log.error(e2.getMessage(), e2);
+				}
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

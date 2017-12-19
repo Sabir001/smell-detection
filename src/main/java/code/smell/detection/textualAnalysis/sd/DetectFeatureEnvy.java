@@ -25,7 +25,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 	
 	
 	@Override
-	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<String>> methods,
+	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
 		List<String> result = new ArrayList<String>();
 		for(int i = 0; i < methods.size(); i++) {
@@ -34,7 +34,11 @@ public class DetectFeatureEnvy implements ISmellDetector{
 				for(int j = 0; j < methods.get(i).size(); j++) {
 					fileManipulation.deleteFilesInSourceDirectory();
 					makeNecessaryFilesFromClass(javaFiles.get(i));
-					Double LSIValueOfOwn = getLsiValue(methods.get(i).get(j));
+					String methodString = "";
+					for(String line : methods.get(i).get(j)){
+						methodString += line;
+					}
+					Double LSIValueOfOwn = getLsiValue(methodString);
 					if(LSIValueOfOwn == 0.0) {
 						LSIValueOfOwn = 1.0;
 					}
@@ -50,7 +54,12 @@ public class DetectFeatureEnvy implements ISmellDetector{
 								if(mainJavaFiles.get(k).contains(word)) {
 									fileManipulation.deleteFilesInSourceDirectory();
 									makeNecessaryFilesFromClass(javaFiles.get(k));
-									double tempLsi = getLsiValue(methods.get(i).get(j));
+									String methodStringOfOther = "";
+									for(String line : methods.get(i).get(j)){
+										methodStringOfOther += line;
+									}
+									
+									double tempLsi = getLsiValue(methodStringOfOther);
 									if(tempLsi < 1 && tempLsi > otherLsi)
 										otherLsi = tempLsi;
 									break;
