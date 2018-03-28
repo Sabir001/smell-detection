@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.IR;
+package code.smell.detection.textual.analysis.ir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,17 +19,15 @@ public class LowerCaseConverter {
 	}
 	
 	private List<String> makeListLowerCased(List<String> javaFiles) {
-		List<String> lowerCasedFiles = javaFiles.stream()
+		return javaFiles.stream()
                 .map(String::toLowerCase)
                 .collect(Collectors.toList());
-		
-		return lowerCasedFiles;
 	}
 
 	public List<ArrayList<String>> makeLowerCaseAllMethods(List<ArrayList<String>> methods){
 		log.info("makeLowerCaseAllMethods invoked");
 		
-		List<ArrayList<String>> lowerCaseMethods = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> lowerCaseMethods = new ArrayList<>();
 		
 		for(ArrayList<String> singleClass : methods) {
 			lowerCaseMethods.add((ArrayList<String>) makeListLowerCased(singleClass));

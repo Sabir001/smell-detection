@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis;
+package code.smell.detection.textual.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +14,15 @@ import org.springframework.stereotype.Component;
 @Scope("singleton")
 public class MethodExtractor {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final String regex = "^(?<indent>\\s*)(?<mod1>\\w+)\\s(?<mod2>\\w+)?\\s*(?<mod3>\\w+)?\\s*(?<return>\\b\\w+)\\s(?<name>\\w+)\\((?<arg>.*?)\\)\\s*\\{(?<body>.+?)^\\k<indent>\\}";
+	private static final String REGEX = "^(?<indent>\\s*)(?<mod1>\\w+)\\s(?<mod2>\\w+)?\\s*(?<mod3>\\w+)?\\s*(?<return>\\b\\w+)\\s(?<name>\\w+)\\((?<arg>.*?)\\)\\s*\\{(?<body>.+?)^\\k<indent>\\}";
 	
 	public List<ArrayList<String>> getMethods(List<String> allJavaCLasses){
-		List<ArrayList<String>> methods = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> methods = new ArrayList<>();
 		
 		log.info("getMethods invoked");
 		
 		try{
-			final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE | Pattern.DOTALL);
+			final Pattern pattern = Pattern.compile(REGEX, Pattern.MULTILINE | Pattern.DOTALL);
 			for(String string : allJavaCLasses) {
 				Matcher matcher = pattern.matcher(string);
 				ArrayList<String> methodInIndividualClass = new ArrayList<>();

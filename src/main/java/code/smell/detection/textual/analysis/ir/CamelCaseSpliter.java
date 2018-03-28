@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.IR;
+package code.smell.detection.textual.analysis.ir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class CamelCaseSpliter {
 	public List<ArrayList<String>> splitAllMethods(List<ArrayList<String>> methods){
 		log.info("splitAllMethods invoked");
 		
-		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<>();
 		
 		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> temporaryMethodList = new ArrayList<>();

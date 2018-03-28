@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.sd;
+package code.smell.detection.textual.analysis.sd;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.LSI;
+package code.smell.detection.textual.analysis.lsi;
 
 
 import java.io.IOException;

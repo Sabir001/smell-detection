@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.sd;
+package code.smell.detection.textual.analysis.sd;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
-import code.smell.detection.textualAnalysis.LSI.LSI;
+import code.smell.detection.textual.analysis.file.creation.FileManipulation;
+import code.smell.detection.textual.analysis.lsi.LSI;
 
 @Component
-public class DetectPromiscousPackage implements ISmellDetector{
+public class DetectMisplacedClass implements ISmellDetector {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
@@ -41,48 +41,36 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		}
 		
 		for (Entry<String, List<String>> mapEntry : map.entrySet()) {
-		    String packageName = mapEntry.getKey();
 		    List<String> javaClasses = mapEntry.getValue();
 
-		    log.info("SearchJ " + packageName);
-		    log.info("SearchJ " + javaClasses.toString());
-		    
 		    fileManipulation.deleteFilesInSourceDirectory();
 		    makeNecessaryFilesFromPackage(javaClasses);
 		    
-		    Double LsiValue = getLsiValue(javaClasses);
-		    
-		    if(LsiValue < threshold){
-		    	result.add("Package: " + packageName);
+		    for(String javaClass : javaClasses){
+		    	Double LsiValue = getLsiValue(javaClass);
+		    	if(LsiValue < threshold){
+		    		result.add("Class: " + getClassName(javaClass));
+		    	}
 		    }
 		}
-		
 		
 		return result;
 	}
 	
-	private Double getLsiValue(List<String> javaClasses) {
+	private Double getLsiValue(String javaClass) {
 		try {
-			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
-					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
+			LSI lsi = new LSI(fileManipulation.SOURCE_FOLDER_NAME, 
+					fileManipulation.STOP_WORD_FOLDER_NAME + "\\" + fileManipulation.STOP_WORD_FILE_NAME);
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
-			Double[] avg = new Double[javaClasses.size()];
-			for(int i = 0; i < javaClasses.size(); i++) {
-				Double subTotal = 0.0;
-				List<Double> query = lsi.handleQuery(javaClasses.get(i));
-				for(int j = 0; j < query.size(); j++) {
-					if(j != i) subTotal += query.get(j);
-				}
-				if(query.size() != 0 && query.size() != 1)
-					avg[i] = subTotal / (query.size() - 1);
-				else avg[i] = 1.0;
-			}
+			
+			List<Double> query = lsi.handleQuery(javaClass);
 			Double total = 0.0;
-			for(Double num : avg) {
+			for(Double num : query) {
 				total += num;
 			}
-			return total / avg.length;
+			
+			return total / query.size();
 			
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
@@ -96,7 +84,7 @@ public class DetectPromiscousPackage implements ISmellDetector{
 		ArrayList<File> files = new ArrayList<File>();
 		try {
 			for(Integer i = 0; i < javaClasses.size(); i++) {
-				files.add(new File(fileManipulation.sourceFolderName + "\\" +  i.toString() + ".txt"));
+				files.add(new File(fileManipulation.SOURCE_FOLDER_NAME + "\\" +  i.toString() + ".txt"));
 				try {
 					files.get(i).createNewFile();
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){
@@ -116,7 +104,7 @@ public class DetectPromiscousPackage implements ISmellDetector{
 			log.error(e.getMessage(), e);
 		}
 	}
-
+	
 	private String getClassName(String string) {
 		try {
 			if(string != null){

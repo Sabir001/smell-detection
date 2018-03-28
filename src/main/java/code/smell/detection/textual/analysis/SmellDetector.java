@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis;
+package code.smell.detection.textual.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.sd.DetectBlob;
-import code.smell.detection.textualAnalysis.sd.DetectFeatureEnvy;
-import code.smell.detection.textualAnalysis.sd.DetectLongMethod;
-import code.smell.detection.textualAnalysis.sd.DetectMisplacedClass;
-import code.smell.detection.textualAnalysis.sd.DetectPromiscousPackage;
+import code.smell.detection.textual.analysis.sd.DetectBlob;
+import code.smell.detection.textual.analysis.sd.DetectFeatureEnvy;
+import code.smell.detection.textual.analysis.sd.DetectLongMethod;
+import code.smell.detection.textual.analysis.sd.DetectMisplacedClass;
+import code.smell.detection.textual.analysis.sd.DetectPromiscousPackage;
 
 @Component
 public class SmellDetector {
@@ -39,7 +39,7 @@ public class SmellDetector {
 	List<String> javaFiles = new ArrayList<>();
 	List<String> mainJavaFiles = new ArrayList<>();
 	List<ArrayList<ArrayList<String>>> methods = new ArrayList<>();
-	List<ArrayList<String>> mainAllmethods = new ArrayList<ArrayList<String>>();
+	List<ArrayList<String>> mainAllmethods = new ArrayList<>();
 	
 	public void initialization(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods, List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods){
 		this.javaFiles = javaFiles;
@@ -50,7 +50,7 @@ public class SmellDetector {
 	}
 	
 	public List<ArrayList<String>> detectCodeSmell() {
-		List<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> results = new ArrayList<>();
 		
 		results.add((ArrayList<String>) detectBlob.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		results.add((ArrayList<String>) detectFeatureEnvy.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
@@ -58,9 +58,6 @@ public class SmellDetector {
 		results.add((ArrayList<String>) detectMisplacedClass.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		results.add((ArrayList<String>) detectPromiscousPackage.detectSmell(javaFiles, methods, mainJavaFiles, mainAllmethods));
 		
-		for(ArrayList<String> list : results) {
-			log.info("SmellSize: " + list.size() + "Smell detection result: " + list.toString());
-		}
 		
 		return results;
 	}

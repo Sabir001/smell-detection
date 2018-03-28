@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.sd;
+package code.smell.detection.textual.analysis.sd;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
-import code.smell.detection.textualAnalysis.FileCreation.StopWordFileCreation;
-import code.smell.detection.textualAnalysis.LSI.LSI;
+import code.smell.detection.textual.analysis.file.creation.FileManipulation;
+import code.smell.detection.textual.analysis.file.creation.StopWordFileCreation;
+import code.smell.detection.textual.analysis.lsi.LSI;
 
 @Component
 public class DetectFeatureEnvy implements ISmellDetector{
@@ -47,8 +47,8 @@ public class DetectFeatureEnvy implements ISmellDetector{
 					for(int k = 0; k < javaFiles.size(); k++) {
 						if(k != i) {
 							for(String word : wordsInMethod) {
-								if(StopWordFileCreation.englishStopWords.contains(word)
-										|| StopWordFileCreation.javaStopWords.contains(word)) {
+								if(StopWordFileCreation.ENGLISH_STOP_WORDS.contains(word)
+										|| StopWordFileCreation.JAVA_STOP_WORDS.contains(word)) {
 									continue;
 								}
 								if(mainJavaFiles.get(k).contains(word)) {
@@ -83,8 +83,8 @@ public class DetectFeatureEnvy implements ISmellDetector{
 	
 	private Double getLsiValue(String string) {
 		try {
-			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
-					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
+			LSI lsi = new LSI(fileManipulation.SOURCE_FOLDER_NAME, 
+					fileManipulation.STOP_WORD_FOLDER_NAME + "\\" + fileManipulation.STOP_WORD_FILE_NAME);
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			
@@ -105,7 +105,7 @@ public class DetectFeatureEnvy implements ISmellDetector{
 	}
 
 	private void makeNecessaryFilesFromClass(String string) {
-		File file = new File(fileManipulation.sourceFolderName + "\\ClassFile.txt");
+		File file = new File(fileManipulation.SOURCE_FOLDER_NAME + "\\ClassFile.txt");
 		try {
 			file.createNewFile();
 			try(BufferedWriter br = new BufferedWriter(new FileWriter(file.getAbsolutePath()))){

@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.sd;
+package code.smell.detection.textual.analysis.sd;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
-import code.smell.detection.textualAnalysis.LSI.LSI;
+import code.smell.detection.textual.analysis.file.creation.FileManipulation;
+import code.smell.detection.textual.analysis.lsi.LSI;
 
 @Component
 public class DetectBlob implements ISmellDetector{
@@ -25,7 +25,7 @@ public class DetectBlob implements ISmellDetector{
 	@Override
 	public List<String> detectSmell(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods,
 			List<String> mainJavaFiles, List<ArrayList<String>> mainAllmethods) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for(int i = 0; i < methods.size(); i++) {
 			try {
 				try{
@@ -65,8 +65,8 @@ public class DetectBlob implements ISmellDetector{
 
 	private Double decideSmell(ArrayList<ArrayList<String>> arrayList) {
 		try {
-			LSI lsi = new LSI(fileManipulation.sourceFolderName, 
-					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
+			LSI lsi = new LSI(fileManipulation.SOURCE_FOLDER_NAME, 
+					fileManipulation.STOP_WORD_FOLDER_NAME + "\\" + fileManipulation.STOP_WORD_FILE_NAME);
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			Double[] avg = new Double[arrayList.size()];
@@ -94,9 +94,7 @@ public class DetectBlob implements ISmellDetector{
 			
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		}
+		} 
 		
 		
 		return 1.0;
@@ -106,7 +104,7 @@ public class DetectBlob implements ISmellDetector{
 		ArrayList<File> files = new ArrayList<File>();
 		try {
 			for(Integer i = 0; i < arrayList.size(); i++) {
-				files.add(new File(fileManipulation.sourceFolderName + "\\" +  i.toString() + ".txt"));
+				files.add(new File(fileManipulation.SOURCE_FOLDER_NAME + "\\" +  i.toString() + ".txt"));
 				try {
 					files.get(i).createNewFile();
 					try(BufferedWriter br = new BufferedWriter(new FileWriter(files.get(i).getAbsolutePath()))){

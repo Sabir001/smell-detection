@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis;
+package code.smell.detection.textual.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +8,27 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.IR.CamelCaseSpliter;
-import code.smell.detection.textualAnalysis.IR.LowerCaseConverter;
-import code.smell.detection.textualAnalysis.IR.SpecialCharecterRemover;
-import code.smell.detection.textualAnalysis.IR.Stemmer;
-import code.smell.detection.textualAnalysis.IR.TfIdf;
+import code.smell.detection.textual.analysis.ir.CamelCaseSpliter;
+import code.smell.detection.textual.analysis.ir.LowerCaseConverter;
+import code.smell.detection.textual.analysis.ir.SpecialCharecterRemover;
+import code.smell.detection.textual.analysis.ir.Stemmer;
+import code.smell.detection.textual.analysis.ir.TfIdf;
 
 @Component
 public class InformationRetrievalTemplate {
+	public List<String> getJavaFiles() {
+		return javaFiles;
+	}
+
+
+	public List<ArrayList<ArrayList<String>>> getMethods() {
+		return methods;
+	}
+
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	public List<String> javaFiles = new ArrayList<>();
-	public List<ArrayList<ArrayList<String>>> methods = new ArrayList<ArrayList<ArrayList<String>>>();
+	private List<String> javaFiles = new ArrayList<>();
+	private List<ArrayList<ArrayList<String>>> methods = new ArrayList<>();
 	
 	@Autowired
 	private CamelCaseSpliter camelCaseSpliter;
@@ -33,8 +42,6 @@ public class InformationRetrievalTemplate {
 	@Autowired
 	private Stemmer stemmer;
 	
-	@Autowired
-	private TfIdf tfidf;
 	
 	
 	public void setLists(List<String> javaFiles, List<ArrayList<ArrayList<String>>> methods){
@@ -46,20 +53,9 @@ public class InformationRetrievalTemplate {
 			makeLowerCase();
 			specialCharacterRemoval();
 			stemmer();
-			//tfIdf();
 		} catch(Exception e){
 			log.error(e.getMessage(), e);
 		}
-	}
-
-
-	private void tfIdf() {
-		List<ArrayList<ArrayList<String>>> changedMethods = new ArrayList<>();
-		for(List<ArrayList<String>> list : methods){
-			changedMethods.add((ArrayList<ArrayList<String>>) stemmer.stemAllMethods(list));
-		}
-		
-		setMethods(changedMethods);
 	}
 
 

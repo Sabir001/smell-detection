@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.IR;
+package code.smell.detection.textual.analysis.ir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class SpecialCharecterRemover {
 	public List<ArrayList<String>> removeSpecialCharacterOfAllMethods(List<ArrayList<String>> methods){
 		log.info("removeSpecialCharacterOfAllMethods invoked");
 		
-		List<ArrayList<String>> removedMethods = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> removedMethods = new ArrayList<>();
 		
 		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> oneCLass = new ArrayList<>();

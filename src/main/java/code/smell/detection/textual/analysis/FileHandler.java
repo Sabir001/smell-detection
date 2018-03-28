@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis;
+package code.smell.detection.textual.analysis;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class FileHandler {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	public List<String> getJavaFiles(MultipartFile file){
-		List<String> javaFiles = new ArrayList<String>();
+		List<String> javaFiles = new ArrayList<>();
 		
 		log.info("getJavaFiles method invoked");
 		try {

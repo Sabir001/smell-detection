@@ -1,22 +1,19 @@
-package code.smell.detection.textualAnalysis.IR;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package code.smell.detection.textual.analysis.ir;
 
 public class PottersStemmer {
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	private char[] b;
-	private int i, /* offset into b */
-			i_end, /* offset to end of stemmed word */
-			j, k;
+	private int i; /* offset into b */
+	private int iEnd; /* offset to end of stemmed word */
+	private int j;
+	private int k;
 	private static final int INC = 50;
 
 	/* unit of size whereby b is increased */
 	public PottersStemmer() {
 		b = new char[INC];
 		i = 0;
-		i_end = 0;
+		iEnd = 0;
 	}
 
 	/**
@@ -56,14 +53,14 @@ public class PottersStemmer {
 	 * getResultLength (which is generally more efficient.)
 	 */
 	public String toString() {
-		return new String(b, 0, i_end);
+		return new String(b, 0, iEnd);
 	}
 
 	/**
 	 * Returns the length of the word resulting from the stemming process.
 	 */
 	public int getResultLength() {
-		return i_end;
+		return iEnd;
 	}
 
 	/**
@@ -517,7 +514,7 @@ public class PottersStemmer {
 			step5();
 			step6();
 		}
-		i_end = k + 1;
+		iEnd = k + 1;
 		i = 0;
 	}
 }

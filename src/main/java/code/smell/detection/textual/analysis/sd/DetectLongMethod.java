@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.sd;
+package code.smell.detection.textual.analysis.sd;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import code.smell.detection.textualAnalysis.FileCreation.FileManipulation;
-import code.smell.detection.textualAnalysis.FileCreation.StopWordFileCreation;
-import code.smell.detection.textualAnalysis.LSI.LSI;
+import code.smell.detection.textual.analysis.file.creation.FileManipulation;
+import code.smell.detection.textual.analysis.file.creation.StopWordFileCreation;
+import code.smell.detection.textual.analysis.lsi.LSI;
 
 @Component
 public class DetectLongMethod implements ISmellDetector{
@@ -98,8 +98,8 @@ public class DetectLongMethod implements ISmellDetector{
 	private Double decideSmell(String string) {
 		LSI lsi;
 		try {
-			lsi = new LSI(fileManipulation.sourceFolderName, 
-					fileManipulation.stopWordFolderName + "\\" + fileManipulation.stopWordFileName);
+			lsi = new LSI(fileManipulation.SOURCE_FOLDER_NAME, 
+					fileManipulation.STOP_WORD_FOLDER_NAME + "\\" + fileManipulation.STOP_WORD_FILE_NAME);
 			lsi.createTermDocumentMatrix();
 			lsi.performSingularValueDecomposition();
 			
@@ -126,8 +126,8 @@ public class DetectLongMethod implements ISmellDetector{
 	private void makeNecessaryFilesFromStatements(String string, String string2) {
 		ArrayList<File> files = new ArrayList<File>();
 		try {
-			files.add(new File(fileManipulation.sourceFolderName + "\\File1.txt"));
-			files.add(new File(fileManipulation.sourceFolderName + "\\File2.txt"));
+			files.add(new File(fileManipulation.SOURCE_FOLDER_NAME + "\\File1.txt"));
+			files.add(new File(fileManipulation.SOURCE_FOLDER_NAME + "\\File2.txt"));
 			try {
 				files.get(0).createNewFile();
 				files.get(1).createNewFile();

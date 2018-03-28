@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.IR;
+package code.smell.detection.textual.analysis.ir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class TfIdf {
 	public List<ArrayList<String>> tfIdfCheckInAllMethods(List<ArrayList<String>> methods){
 		log.info("tfIdfCheckInAllMethods invoked");
 		
-		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<>();
 		
 		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> temporaryMethodList = new ArrayList<>();
@@ -65,7 +65,7 @@ public class TfIdf {
                 }
             }
         }
-        return Math.log(methods.size() / n);
+        return Math.log(methods.size() / (n == 0 ? 1 : n));
     }
 
     /**

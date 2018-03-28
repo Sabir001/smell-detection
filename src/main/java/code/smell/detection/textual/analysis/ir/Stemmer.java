@@ -1,4 +1,4 @@
-package code.smell.detection.textualAnalysis.IR;
+package code.smell.detection.textual.analysis.ir;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class Stemmer {
 	public List<ArrayList<String>> stemAllMethods(List<ArrayList<String>> methods) {
 		log.info("stemAllMethods invoked");
 		
-		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<ArrayList<String>>();
+		List<ArrayList<String>> allMethodsOfFiles = new ArrayList<>();
 		
 		for(ArrayList<String> singleClass : methods) {
 			ArrayList<String> temporaryMethodList = new ArrayList<>();

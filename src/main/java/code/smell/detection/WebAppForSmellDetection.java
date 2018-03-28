@@ -18,7 +18,7 @@ public class WebAppForSmellDetection extends SpringBootServletInitializer {
 		return application.sources(WebAppForSmellDetection.class);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(WebAppForSmellDetection.class, args);
 	}
 	
